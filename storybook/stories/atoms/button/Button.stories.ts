@@ -5,7 +5,7 @@ export default {
   argTypes: {
     color: {
       control: { type: 'select' },
-      options: ['primary', 'secondary', 'tertiary'],
+      options: ['primary', 'secondary', 'tertiary', 'quatenary'],
       description: 'The color for the button, by default it is primary',
     },
     size: {
@@ -20,8 +20,12 @@ export default {
     },
     ghost: {
       control: { type: 'boolean' },
-      description: 'See the disabled status of the button',
+      description: 'See the ghost status of the button',
     },
+    disabled: {
+      control: { type: 'boolean' },
+      description: 'see if you want to disabled the button'
+    }
   },
 };
 
@@ -33,4 +37,5 @@ Button.args = {
   size: 'md',
   label: 'button',
   ghost: false,
+  disabled: false,
 };

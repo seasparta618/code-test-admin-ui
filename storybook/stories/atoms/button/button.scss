@@ -1,10 +1,127 @@
-@use '../lib/lib' as lib;
+@use 'sass:map';
+@use 'sass:list';
+@use '../../lib/lib' as lib;
 
-.button-primary {
-    background: lib.$color-purple;
-    height: 44px;
-    width: fit-content;
-    border-radius: 8px;
+$button-size-list: (
+    sm,
+    md,
+    lg,
+    xl,
+    xxl
+);
 
-    @include lib.typography-text('md','semibold');
+$button-height-map: (
+    sm: 36px,
+    md: 40px,
+    lg: 44px,
+    xl: 48px,
+    xxl: 60px
+);
+
+$button-padding-map: (
+    sm: 8px 12px,
+    md: 10px 14px,
+    lg: 12px 18px,
+    xl: 12px 18px,
+    xxl: 16px 26px,
+);
+
+$button-radius-map: (
+    sm: 8px,
+    md: 8px,
+    lg: 12px,
+    xl: 12px,
+    xxl: 16px,
+);
+
+$button-typography-size-map: (
+    sm: 'sm',
+    md: 'sm',
+    lg: 'md',
+    xl: 'md',
+    xxl: 'lg'
+);
+
+$button-color-map: (
+    'primary': lib.$color-purple,
+    'secondary': lib.$color-red,
+    'tertiary': lib.$color-grey,
+    'quatenary': lib.$color-blue,
+);
+
+$button-color-border-map: (
+    'primary': lib.$color-purple-600,
+    'secondary': lib.$color-red-600,
+    'tertiary': lib.$color-grey-600,
+    'quatenary': lib.$color-blue-600,
+);
+
+$button-color-hover-background-map: (
+    'primary': lib.$color-purple-200,
+    'secondary': lib.$color-red-200,
+    'tertiary': lib.$color-grey-200,
+    'quatenary': lib.$color-blue-200,
+);
+
+$button-color-hover-border-map: (
+    'primary': lib.$color-purple-300,
+    'secondary': lib.$color-red-300,
+    'tertiary': lib.$color-grey-300,
+    'quatenary': lib.$color-blue-300,
+);
+
+@each $size in $button-size-list {
+    $height: map-get($button-height-map, $size);
+    $padding: map-get($button-padding-map, $size);
+    $radius: map-get($button-radius-map, $size);
+    $typography: map-get($button-typography-size-map, $size);
+
+    $height: if($height, $height, 'auto');
+    $padding: if($padding, $padding, 'auto');
+    $radius: if($radius, $radius, 'auto');
+
+    .button-#{$size} {
+        height: $height;
+        padding: $padding;
+        cursor: pointer;
+        user-select: none;
+        border-radius: $radius;
+        @include lib.typography-text($typography, 'regular');
+    }
+}
+
+@each $color-name, $color-value in $button-color-map {
+    .button-#{$color-name} {
+        background-color: $color-value;
+        border: 1px solid map-get($button-color-border-map, $color-name);
+        color: lib.$color-white;
+
+        &:hover {
+            background-color: map-get($button-color-hover-background-map, $color-name);
+            border-color: map-get($button-color-hover-border-map, $color-name);
+        }
+
+        &.button-ghost {
+            background-color: lib.$color-white;
+            border-color: map-get($button-color-border-map, $color-name);
+            color: map-get($button-color-map, $color-name);
+
+            &:hover {
+                background-color: map-get($button-color-hover-background-map, $color-name);
+                border-color: map-get($button-color-hover-border-map, $color-name);
+            }
+        }
+    }
+}
+
+.button-disabled {
+    cursor: not-allowed;
+    user-select: none;
+    background-color: lib.$color-grey-200;
+    border-color: lib.$color-grey-300;
+
+    &:hover {
+        background-color: lib.$color-grey-200;
+        border-color: lib.$color-grey-300;
+    }
 }
