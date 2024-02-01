@@ -5,6 +5,8 @@
 @use '/storybook/stories/molecures/table/user-table/user-table.scss';
 @use '/storybook/stories/lib/lib' as lib;
 
+@use './pages/admin-page.scss';
+
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
