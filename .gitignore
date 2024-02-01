@@ -6,6 +6,7 @@
 .pnp.js
 
 /storybook/node_modules
+/storybook/storybook-static
 
 # testing
 /coverage
