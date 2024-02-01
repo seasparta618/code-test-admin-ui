@@ -1,9 +1,12 @@
-import React from 'react';
-import logo from './logo.svg';
 import './styles/main.scss';
 
 export const App = () => {
-  return <div className="App"></div>;
+  return (
+    <div className="mainPage" data-testid="main-page">
+      <div className="mainPage-header" data-testid="page-header"></div>
+      <div className="mainPage-content" data-testid="page-content"></div>
+    </div>
+  );
 };
 
 export default App;

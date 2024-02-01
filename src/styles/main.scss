@@ -3,6 +3,7 @@
 @use '/storybook/stories/atoms/form/search-bar/search-bar.scss';
 @use '/storybook/stories/atoms/pagination/pagination.scss';
 @use '/storybook/stories/molecures/table/user-table/user-table.scss';
+@use '/storybook/stories/lib/lib' as lib;
 
 body {
     margin: 0;
@@ -11,9 +12,36 @@ body {
         sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+    padding: 0;
 }
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-        monospace;
+#root {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
 }
+
+.mainPage {
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    background-color: lib.$color-grey-100;
+}
+
+.mainPage-header{
+    background-color: lib.$color-white;
+    position: sticky;
+    top: 0;
+    @include lib.set-box-shadow('xs', 'grey', 'xs');
+}
+
+.mainPage-content{
+    display: flex;
+    width: 100%;
+    flex-grow: 1;
+    flex-direction: column;
+}
+  
