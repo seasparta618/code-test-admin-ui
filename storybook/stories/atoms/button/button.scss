@@ -42,6 +42,15 @@ $button-typography-size-map: (
     xxl: 'lg'
 );
 
+$icon-button-typography-size-map: (
+    sm: 'md',
+    md: 'md',
+    lg: 'lg',
+    xl: 'lg',
+    xxl: 'xl'
+);
+
+
 $button-color-map: (
     'primary': lib.$color-purple,
     'secondary': lib.$color-red,
@@ -81,12 +90,28 @@ $button-color-hover-border-map: (
     $radius: if($radius, $radius, 'auto');
 
     .button-#{$size} {
+        display: flex;
+        flex-direction: row;
+        gap: 4px;
         height: $height;
         padding: $padding;
+        box-sizing: border-box;
         cursor: pointer;
         user-select: none;
         border-radius: $radius;
         @include lib.typography-text($typography, 'regular');
+    }
+
+    .iconButton-#{$size} {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $height;
+        height: $height;
+        border-radius: $radius;
+        cursor: pointer;
+        user-select: none;
+        @include lib.typography-text(map-get($icon-button-typography-size-map, $size), 'semibold');
     }
 }
 
@@ -96,9 +121,21 @@ $button-color-hover-border-map: (
         border: 1px solid map-get($button-color-border-map, $color-name);
         color: lib.$color-white;
 
+        svg {
+            path {
+                stroke: lib.$color-white;
+            }
+        }
+
         &:hover {
             background-color: map-get($button-color-hover-background-map, $color-name);
             border-color: map-get($button-color-hover-border-map, $color-name);
+        }
+
+        &:active {
+            box-shadow: inset 0 0 3px rgba(map-get($button-color-map, $color-name), 1),
+                0 4px 6px rgba(map-get($button-color-map, $color-name), 0.7);
+            background-color: darken(map-get($button-color-map, $color-name), 20%);
         }
 
         &.button-ghost {
@@ -106,9 +143,21 @@ $button-color-hover-border-map: (
             border-color: map-get($button-color-border-map, $color-name);
             color: map-get($button-color-map, $color-name);
 
+            svg {
+                path {
+                    stroke: map-get($button-color-border-map, $color-name);
+                }
+            }
+
             &:hover {
                 background-color: map-get($button-color-hover-background-map, $color-name);
                 border-color: map-get($button-color-hover-border-map, $color-name);
+                @include lib.set-box-shadow('md', $color-name, 'md')
+            }
+
+            &:active {
+                box-shadow: inset 1px 1px 3px rgba(map-get($button-color-map, $color-name), 1),
+                    inset 0 4px 6px rgba(map-get($button-color-map, $color-name), 0.7);
             }
         }
     }
@@ -117,11 +166,12 @@ $button-color-hover-border-map: (
 .button-disabled {
     cursor: not-allowed;
     user-select: none;
-    background-color: lib.$color-grey-200;
-    border-color: lib.$color-grey-300;
+    background-color: lib.$color-grey-100;
+    border: 1px solid lib.$color-grey-200;
+    @include lib.set-box-shadow('sm', 'grey', 'md');
 
     &:hover {
-        background-color: lib.$color-grey-200;
-        border-color: lib.$color-grey-300;
+        background-color: lib.$color-grey-100;
+        border-color: lib.$color-grey-200;
     }
 }
