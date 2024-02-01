@@ -138,9 +138,9 @@ export const DoublChevronRightIcon: FC<IconProps> = ({
       <path
         d="M6 17L11 12L6 7M13 17L18 12L13 7"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -180,9 +180,9 @@ export const ChevronRightIcon: FC<IconProps> = ({ size, color, ...props }) => {
       <path
         d="M9 18L15 12L9 6"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
