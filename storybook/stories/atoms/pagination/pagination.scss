@@ -1,0 +1,14 @@
+@use '../../lib/lib' as lib;
+
+.pagination {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    border: none;
+    height: fit-content;
+    width: fit-content;
+}
+
+.pagination-active{
+    pointer-events: none;
+}
