@@ -1,0 +1,63 @@
+@use '../../../lib/lib' as lib;
+
+.searchBar {
+    width: 100%;
+    height: 42px;
+    display: flex;
+    gap: 4px;
+    border-radius: 8px;
+    flex-direction: row;
+    align-items: center;
+    padding: 2px;
+    border: 1.5px solid lib.$color-grey-400;
+    @include lib.set-box-shadow('sm','grey','sm');
+}
+
+.searchBar-icon {
+    display: flex;
+    height: 32px;
+    width: 32px;
+    align-items: center;
+    justify-content: center;
+
+    svg { 
+        path {
+            stroke: lib.$color-grey-800;
+        }
+    }
+
+    &.searchBar-searchIcon{
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    &.searchBar-cleanupIcon{
+        margin-left: auto;
+        margin-right: 0;
+        cursor: pointer;
+        user-select: none;
+    }
+}
+
+.searchBar-input {
+    display: flex;
+    align-items: center;
+    border: none;
+    width: 100%;
+    background-color: transparent;
+    color: lib.$color-grey-700;
+    flex-grow: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    @include lib.typography-text('md', 'semibold');
+
+    &::placeholder {
+        color: lib.$color-grey-400;
+        @include lib.typography-text('md','regular');
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
