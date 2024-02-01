@@ -6,7 +6,7 @@ interface SearchBarProps {
   onSubmit: (value: string) => void;
 }
 
-export const SearchInput = ({
+export const SearchBar = ({
   currentValue = '',
   onSubmit = () => {},
 }: SearchBarProps) => {
@@ -43,6 +43,7 @@ export const SearchInput = ({
         <SearchIcon size={20} />
       </span>
       <input
+        data-testid="searchBar-input"
         className="searchBar-input"
         placeholder={placeholder}
         value={value}
@@ -53,6 +54,7 @@ export const SearchInput = ({
       />
       {value.length ? (
         <button
+          data-testid="searchBar-searchButton"
           className="button-sm button-quatenary"
           onClick={handleOnSearchButtonClick}
         >
@@ -61,6 +63,7 @@ export const SearchInput = ({
       ) : null}
       {value.length ? (
         <span
+          data-testid="searchBar-cleanupIcon"
           className="searchBar-icon searchBar-cleanupIcon"
           onClick={() => {
             setValue('');
