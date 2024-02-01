@@ -1,6 +1,7 @@
 // UserTable.tsx
 import React, { useState } from 'react';
 import './user-table.scss';
+import '../../../atoms/form/checkbox/checkbox.scss';
 import { CrossIcon } from '../../../shared/icon';
 
 interface User {
@@ -36,22 +37,23 @@ export const BuildUserTable: React.FC<UserTableProps> = ({ initialUsers }) => {
     const handleRemoveRow = (userId: string) => {
         setRemovingId(userId);
         setTimeout(() => {
-            setUsers(users.filter((u)=>u.id !== userId));
-        }, 250); 
-      };
+            setUsers(users.filter((u) => u.id !== userId));
+        }, 250);
+    };
 
     return (
         <table className="userTable">
             <tr className='userTable-tr'>
-                <th className='userTable-th'><input type='checkbox' /></th>
+                <th className='userTable-th'><input type='checkbox' className='checkbox-input checkbox-sm' /></th>
                 <th className='userTable-th'>Name</th>
                 <th className='userTable-th'>Email</th>
                 <th className='userTable-th'>Role</th>
                 <th className='userTable-th'>Actions</th>
             </tr>
             {users.map(user => (
-                <tr key={user.id} className={`userTable-tr${user.id === removingId?' removing':''}${selectedIds.has(user.id)? ' userTable-trSelected':''}`}>
+                <tr key={user.id} className={`userTable-tr${user.id === removingId ? ' removing' : ''}${selectedIds.has(user.id) ? ' userTable-trSelected' : ''}`}>
                     <td className='userTable-td'> <input
+                        className='checkbox-input checkbox-sm'
                         type='checkbox'
                         checked={selectedIds.has(user.id)}
                         onChange={(e) => handleRowSelectionChange(user.id, e.target.checked)}
