@@ -1,44 +1,28 @@
 // UserDataTable.tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { User } from '../../types/user';
-import { check } from 'prettier';
 import { CrossIcon } from '../icons/icon';
 
-export type DisplayedUser = User & {
-  isSelected: boolean;
-};
-
 interface UserDataTableProps {
-  users: DisplayedUser[];
+  users: User[];
+  selectedUserIds: string[];
   isBulkSelected: boolean;
+  setSelectedUserIds: (userIds: string[]) => void;
   setIsBulkSelected: (checked: boolean) => void;
-  onUserDataChange: (users: DisplayedUser[]) => void;
+  toggletUserSelection: (userId: string, isSelected: boolean) => void;
 }
 
 export const UserDataTable: React.FC<UserDataTableProps> = ({
   users,
-  onUserDataChange,
   isBulkSelected,
+  selectedUserIds,
+  setSelectedUserIds,
   setIsBulkSelected,
+  toggletUserSelection,
 }) => {
-  const handleRowSelectionChange = (userId: string) => {
-    const updatedUsers = users.map((user) => {
-      if (user.id === userId) {
-        console.log('need to set this user status to', !user.isSelected);
-        return { ...user, isSelected: !user.isSelected };
-      }
-      return user;
-    });
-    onUserDataChange(updatedUsers);
-  };
-
-  const handleOnBulkSelect = () => {
-    const updateUsers = users.map((user) => {
-      user.isSelected = !isBulkSelected;
-      return user;
-    });
-    onUserDataChange(updateUsers);
-    setIsBulkSelected(!isBulkSelected);
+  const toggleBulkSelection = (newBulkSelected: boolean) => {
+    setSelectedUserIds(newBulkSelected ? users.map((u) => u.id) : []);
+    setIsBulkSelected(newBulkSelected);
   };
 
   return (
@@ -48,8 +32,10 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
           <input
             type="checkbox"
             className="checkbox-input checkbox-sm"
-            onClick={handleOnBulkSelect}
             checked={isBulkSelected}
+            onClick={() => {
+              toggleBulkSelection(!isBulkSelected);
+            }}
           />
         </th>
         <th className="userTable-headerElement">Name</th>
@@ -60,16 +46,16 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
       {users.map((user) => (
         <tr
           key={user.id}
-          className={`userTable-row ${
-            user.isSelected ? ' userTable-selectedRow' : ''
-          }`}
+          className={`userTable-row ${selectedUserIds.includes(user.id) ? 'userTable-selectedRow' : ''}`}
         >
           <td className="userTable-rowElement">
             <input
               className="checkbox-input checkbox-sm"
               type="checkbox"
-              checked={user.isSelected}
-              onChange={() => handleRowSelectionChange(user.id)}
+              checked={selectedUserIds.includes(user.id)}
+              onClick={() =>
+                toggletUserSelection(user.id, selectedUserIds.includes(user.id))
+              }
             />
           </td>
           <td className="userTable-rowElement">{user.name}</td>

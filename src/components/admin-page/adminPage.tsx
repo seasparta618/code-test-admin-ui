@@ -1,60 +1,46 @@
 // AdminPage.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { SearchBar } from '../common/input/searchBar';
 import { PaginationBar } from '../common/pagination/paginationBar';
-import { DisplayedUser, UserDataTable } from './userDataTable';
+import { UserDataTable } from './userDataTable';
 import { User } from '../../types/user';
 import { fetchUsers } from '../../api/user';
 import { UserDataZeroState } from './userDataZeroState';
 
 export const AdminPage = () => {
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [activePage, setActivePage] = useState<number>(1);
-  const [allUsers, setAllUsers] = useState<User[]>([]);
-  const [displayedUsers, setDisplayedUsers] = useState<DisplayedUser[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isBulkSelected, setIsBulkSelected] = useState<boolean>(false);
-
-  // this can later be extended by a select / dropdown, if in that case, should use useState hook to define
-  const usersPerPage = 10;
-  const [totalPage, setTotalPage] = useState<number>(
-    Math.ceil(allUsers.length / usersPerPage)
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [activePage, setActivePage] = useState<number>(1);
+  const [selectedUserIds, setSeletedUserIds] = useState<string[]>([]);
+  const pageSize = 10;
+  const totalPage = useMemo(
+    () => Math.ceil(users.length / pageSize),
+    [users, pageSize]
   );
 
-  const updateDisplayedUsers = () => {
-    const filteredUsers = allUsers.filter((user) =>
-      `${user.email} ${user.email} ${user.role}`
+  const displayedUsers = useMemo(() => {
+    const filteredUsers = users.filter((user) =>
+      `${user.name} ${user.email} ${user.role}`
         .toLowerCase()
         .includes(searchValue.toLowerCase())
     );
 
-    const newTotalPage = Math.ceil(filteredUsers.length / usersPerPage);
-    setTotalPage(newTotalPage);
+    const startIndex = (activePage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
 
-    const startIndex = (activePage - 1) * usersPerPage;
-    const endIndex = startIndex + usersPerPage;
-    const newDisplayedUsers = filteredUsers
-      .slice(startIndex, endIndex)
-      .map((user) => ({ ...user, isSelected: false }));
+    return filteredUsers.slice(startIndex, endIndex);
+  }, [users, searchValue, activePage, pageSize]);
 
-    setDisplayedUsers(newDisplayedUsers);
-  };
-
-  const onUserDataChange = (users: DisplayedUser[]) => {
-    setDisplayedUsers(users);
-    if (isBulkSelected && users.filter(user => user.isSelected).length === 0){
-      setIsBulkSelected(false);
-    }else if (!isBulkSelected && users.filter(user => !user.isSelected).length === 0){
-      setIsBulkSelected(true);
-    }
-  }
+  // this can later be extended by a select / dropdown, if in that case, should use useState hook to define
 
   // load all the users only when the component is initialized and mounted
   useEffect(() => {
     const loadUsers = async () => {
       try {
         const fetchedUsers = await fetchUsers();
-        setAllUsers(fetchedUsers);
+        setUsers(fetchedUsers);
       } catch (error) {
         console.log(error);
       } finally {
@@ -65,10 +51,29 @@ export const AdminPage = () => {
     loadUsers();
   }, []);
 
-  useEffect(() => {
-    updateDisplayedUsers();
-    setIsBulkSelected(false);
-  }, [allUsers, searchValue, activePage]);
+  const toggleUserSelection = (userId: string, isSelected: boolean) => {
+    const newSelectedIds = isSelected
+      ? selectedUserIds.filter((id) => id !== userId)
+      : [...selectedUserIds, userId];
+    setSeletedUserIds(newSelectedIds);
+    // special check, if all the users are ticked, this should be regarded as bulk selected ticked
+    // else, if all the users are un-ticked, this should be regarded as builk selected is unticked
+    if (isBulkSelected && !newSelectedIds.length) {
+      setIsBulkSelected(false);
+    } else if (
+      !isBulkSelected &&
+      newSelectedIds.length === displayedUsers.length
+    ) {
+      setIsBulkSelected(true);
+    }
+  };
+
+  const onPageChange = (pageNumber: number) => {
+    if (pageNumber !== activePage) {
+      setSeletedUserIds([]);
+    }
+    setActivePage(pageNumber);
+  };
 
   const handleSearchSubmit = (searchTerm: string) => {
     setSearchValue(searchTerm);
@@ -84,9 +89,11 @@ export const AdminPage = () => {
         ) : (
           <UserDataTable
             users={displayedUsers}
-            onUserDataChange={onUserDataChange}
+            selectedUserIds={selectedUserIds}
+            setSelectedUserIds={setSeletedUserIds}
             isBulkSelected={isBulkSelected}
             setIsBulkSelected={setIsBulkSelected}
+            toggletUserSelection={toggleUserSelection}
           />
         )}
         {displayedUsers.length ? null : (
@@ -98,7 +105,9 @@ export const AdminPage = () => {
         style={{ visibility: displayedUsers.length ? 'visible' : 'hidden' }}
       >
         <div className="adminPage-deleteSelected">
-          <button className="button-md button-secondary">
+          <button
+            className={`button-md ${selectedUserIds.length ? 'button-secondary' : 'button-disabled'}`}
+          >
             Delete Selected
           </button>
         </div>
@@ -107,7 +116,7 @@ export const AdminPage = () => {
             currentPage={activePage}
             totalPage={totalPage}
             totalButtonNumber={5}
-            onPageChange={setActivePage}
+            onPageChange={onPageChange}
           />
         </div>
       </div>

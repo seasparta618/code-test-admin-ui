@@ -170,6 +170,7 @@ $button-color-hover-border-map: (
     user-select: none;
     background-color: lib.$color-grey-100;
     border: 1px solid lib.$color-grey-200;
+    color: lib.$color-grey-300;
     @include lib.set-box-shadow('sm', 'grey', 'md');
 
     &:hover {

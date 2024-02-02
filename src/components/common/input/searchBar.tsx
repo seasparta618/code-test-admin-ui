@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { CrossIcon, SearchIcon } from '../../icons/icon';
+import { useRef, useState } from 'react';
+import { SearchIcon } from '../../icons/icon';
 
 interface SearchBarProps {
   currentValue: string;

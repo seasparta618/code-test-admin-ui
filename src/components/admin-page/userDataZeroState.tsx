@@ -12,7 +12,7 @@ export const UserDataZeroState: FC<ZeroStateProps> = ({ searchValue = '' }) => {
       <div className="adminPage-zeroContentHeader">No exact matched</div>
       <div className="adminPage-zeroContentText">
         {`There is not matched result${
-          searchValue.length ? ` for your search \"${searchValue}\"` : ''
+          searchValue.length ? ` for your search "${searchValue}"` : ''
         }, try something else`}
       </div>
     </div>
