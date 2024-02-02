@@ -10,13 +10,14 @@ export default {
     },
     size: {
       control: { type: 'select' },
-      options: ['sm','md','lg','xl'],
+      options: ['sm', 'md', 'lg', 'xl'],
       description: 'The size for the button, by default it is md - medium',
     },
     label: {
       control: { type: 'text' },
       defaultValue: 'button',
-      description: 'Input different content to see the button with different text',
+      description:
+        'Input different content to see the button with different text',
     },
     ghost: {
       control: { type: 'boolean' },
@@ -24,8 +25,8 @@ export default {
     },
     disabled: {
       control: { type: 'boolean' },
-      description: 'see if you want to disabled the button'
-    }
+      description: 'see if you want to disabled the button',
+    },
   },
 };
 

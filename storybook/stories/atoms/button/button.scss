@@ -2,179 +2,183 @@
 @use 'sass:list';
 @use '../../lib/lib' as lib;
 
-$button-size-list: (
-    sm,
-    md,
-    lg,
-    xl,
-    xxl
-);
+$button-size-list: (sm, md, lg, xl, xxl);
 
 $button-height-map: (
-    sm: 36px,
-    md: 40px,
-    lg: 44px,
-    xl: 48px,
-    xxl: 60px
+  sm: 36px,
+  md: 40px,
+  lg: 44px,
+  xl: 48px,
+  xxl: 60px,
 );
 
 $button-padding-map: (
-    sm: 8px 12px,
-    md: 10px 14px,
-    lg: 12px 18px,
-    xl: 12px 18px,
-    xxl: 16px 26px,
+  sm: 8px 12px,
+  md: 10px 14px,
+  lg: 12px 18px,
+  xl: 12px 18px,
+  xxl: 16px 26px,
 );
 
 $button-radius-map: (
-    sm: 8px,
-    md: 8px,
-    lg: 12px,
-    xl: 12px,
-    xxl: 16px,
+  sm: 8px,
+  md: 8px,
+  lg: 12px,
+  xl: 12px,
+  xxl: 16px,
 );
 
 $button-typography-size-map: (
-    sm: 'sm',
-    md: 'sm',
-    lg: 'md',
-    xl: 'md',
-    xxl: 'lg'
+  sm: 'sm',
+  md: 'sm',
+  lg: 'md',
+  xl: 'md',
+  xxl: 'lg',
 );
 
 $icon-button-typography-size-map: (
-    sm: 'md',
-    md: 'md',
-    lg: 'lg',
-    xl: 'lg',
-    xxl: 'xl'
+  sm: 'md',
+  md: 'md',
+  lg: 'lg',
+  xl: 'lg',
+  xxl: 'xl',
 );
 
-
 $button-color-map: (
-    'primary': lib.$color-purple,
-    'secondary': lib.$color-red,
-    'tertiary': lib.$color-grey,
-    'quatenary': lib.$color-blue,
+  'primary': lib.$color-purple,
+  'secondary': lib.$color-red,
+  'tertiary': lib.$color-grey,
+  'quatenary': lib.$color-blue,
 );
 
 $button-color-border-map: (
-    'primary': lib.$color-purple-600,
-    'secondary': lib.$color-red-600,
-    'tertiary': lib.$color-grey-600,
-    'quatenary': lib.$color-blue-600,
+  'primary': lib.$color-purple-600,
+  'secondary': lib.$color-red-600,
+  'tertiary': lib.$color-grey-600,
+  'quatenary': lib.$color-blue-600,
 );
 
 $button-color-hover-background-map: (
-    'primary': lib.$color-purple-200,
-    'secondary': lib.$color-red-200,
-    'tertiary': lib.$color-grey-200,
-    'quatenary': lib.$color-blue-200,
+  'primary': lib.$color-purple-200,
+  'secondary': lib.$color-red-200,
+  'tertiary': lib.$color-grey-200,
+  'quatenary': lib.$color-blue-200,
 );
 
 $button-color-hover-border-map: (
-    'primary': lib.$color-purple-300,
-    'secondary': lib.$color-red-300,
-    'tertiary': lib.$color-grey-300,
-    'quatenary': lib.$color-blue-300,
+  'primary': lib.$color-purple-300,
+  'secondary': lib.$color-red-300,
+  'tertiary': lib.$color-grey-300,
+  'quatenary': lib.$color-blue-300,
 );
 
 @each $size in $button-size-list {
-    $height: map-get($button-height-map, $size);
-    $padding: map-get($button-padding-map, $size);
-    $radius: map-get($button-radius-map, $size);
-    $typography: map-get($button-typography-size-map, $size);
+  $height: map-get($button-height-map, $size);
+  $padding: map-get($button-padding-map, $size);
+  $radius: map-get($button-radius-map, $size);
+  $typography: map-get($button-typography-size-map, $size);
 
-    $height: if($height, $height, 'auto');
-    $padding: if($padding, $padding, 'auto');
-    $radius: if($radius, $radius, 'auto');
+  $height: if($height, $height, 'auto');
+  $padding: if($padding, $padding, 'auto');
+  $radius: if($radius, $radius, 'auto');
 
-    .button-#{$size} {
-        display: flex;
-        flex-direction: row;
-        gap: 4px;
-        height: $height;
-        padding: $padding;
-        box-sizing: border-box;
-        cursor: pointer;
-        user-select: none;
-        align-items: center;
-        justify-content: center;
-        border-radius: $radius;
-        @include lib.typography-text($typography, 'semibold');
-    }
+  .button-#{$size} {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    height: $height;
+    padding: $padding;
+    box-sizing: border-box;
+    cursor: pointer;
+    user-select: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius;
+    @include lib.typography-text($typography, 'semibold');
+  }
 
-    .iconButton-#{$size} {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: $height;
-        height: $height;
-        border-radius: $radius;
-        cursor: pointer;
-        user-select: none;
-        @include lib.typography-text(map-get($icon-button-typography-size-map, $size), 'semibold');
-    }
+  .iconButton-#{$size} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $height;
+    height: $height;
+    border-radius: $radius;
+    cursor: pointer;
+    user-select: none;
+    @include lib.typography-text(
+      map-get($icon-button-typography-size-map, $size),
+      'semibold'
+    );
+  }
 }
 
 @each $color-name, $color-value in $button-color-map {
-    .button-#{$color-name} {
-        background-color: $color-value;
-        border: 1px solid map-get($button-color-border-map, $color-name);
-        color: lib.$color-white;
+  .button-#{$color-name} {
+    background-color: $color-value;
+    border: 1px solid map-get($button-color-border-map, $color-name);
+    color: lib.$color-white;
 
-        svg {
-            path {
-                stroke: lib.$color-white;
-            }
-        }
-
-        &:hover {
-            background-color: map-get($button-color-hover-background-map, $color-name);
-            border-color: map-get($button-color-hover-border-map, $color-name);
-        }
-
-        &:active {
-            box-shadow: inset 0 0 3px rgba(map-get($button-color-map, $color-name), 1),
-                0 4px 6px rgba(map-get($button-color-map, $color-name), 0.7);
-            background-color: darken(map-get($button-color-map, $color-name), 20%);
-        }
-
-        &.button-ghost {
-            background-color: lib.$color-white;
-            border-color: map-get($button-color-border-map, $color-name);
-            color: map-get($button-color-map, $color-name);
-
-            svg {
-                path {
-                    stroke: map-get($button-color-border-map, $color-name);
-                }
-            }
-
-            &:hover {
-                background-color: map-get($button-color-hover-background-map, $color-name);
-                border-color: map-get($button-color-hover-border-map, $color-name);
-                @include lib.set-box-shadow('md', $color-name, 'md')
-            }
-
-            &:active {
-                box-shadow: inset 1px 1px 3px rgba(map-get($button-color-map, $color-name), 1),
-                    inset 0 4px 6px rgba(map-get($button-color-map, $color-name), 0.7);
-            }
-        }
+    svg {
+      path {
+        stroke: lib.$color-white;
+      }
     }
+
+    &:hover {
+      background-color: map-get(
+        $button-color-hover-background-map,
+        $color-name
+      );
+      border-color: map-get($button-color-hover-border-map, $color-name);
+    }
+
+    &:active {
+      box-shadow:
+        inset 0 0 3px rgba(map-get($button-color-map, $color-name), 1),
+        0 4px 6px rgba(map-get($button-color-map, $color-name), 0.7);
+      background-color: darken(map-get($button-color-map, $color-name), 20%);
+    }
+
+    &.button-ghost {
+      background-color: lib.$color-white;
+      border-color: map-get($button-color-border-map, $color-name);
+      color: map-get($button-color-map, $color-name);
+
+      svg {
+        path {
+          stroke: map-get($button-color-border-map, $color-name);
+        }
+      }
+
+      &:hover {
+        background-color: map-get(
+          $button-color-hover-background-map,
+          $color-name
+        );
+        border-color: map-get($button-color-hover-border-map, $color-name);
+        @include lib.set-box-shadow('md', $color-name, 'md');
+      }
+
+      &:active {
+        box-shadow:
+          inset 1px 1px 3px rgba(map-get($button-color-map, $color-name), 1),
+          inset 0 4px 6px rgba(map-get($button-color-map, $color-name), 0.7);
+      }
+    }
+  }
 }
 
 .button-disabled {
-    cursor: not-allowed;
-    user-select: none;
-    background-color: lib.$color-grey-100;
-    border: 1px solid lib.$color-grey-200;
-    color: lib.$color-grey-300;
-    @include lib.set-box-shadow('sm', 'grey', 'md');
+  cursor: not-allowed !important;
+  user-select: none !important;
+  background-color: lib.$color-grey-100;
+  border: 1px solid lib.$color-grey-200;
+  color: lib.$color-grey-300;
+  @include lib.set-box-shadow('sm', 'grey', 'md');
 
-    &:hover {
-        background-color: lib.$color-grey-100;
-        border-color: lib.$color-grey-200;
-    }
+  &:hover {
+    background-color: lib.$color-grey-100;
+    border-color: lib.$color-grey-200;
+  }
 }

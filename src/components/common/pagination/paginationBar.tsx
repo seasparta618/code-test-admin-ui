@@ -63,7 +63,7 @@ export const PaginationBar: FC<PaginationBarProps> = ({
   };
 
   const getSpecialButtonClass = (buttonType: specialButtonType) => {
-    return `iconButton-md ${
+    return `pagination-button${
       isSpecialButtondisabled(buttonType)
         ? '  button-disabled'
         : ` ${buttonStyleClass}`
@@ -94,7 +94,7 @@ export const PaginationBar: FC<PaginationBarProps> = ({
         return (
           <div
             key={pageNumber}
-            className={`iconButton-md button-primary ${
+            className={`pagination-button button-primary ${
               pageNumber === currentPage
                 ? ' pagination-activeButton'
                 : ' button-ghost'

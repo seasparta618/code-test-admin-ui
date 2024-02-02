@@ -14,10 +14,19 @@ export const AdminPage = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [activePage, setActivePage] = useState<number>(1);
   const [selectedUserIds, setSeletedUserIds] = useState<string[]>([]);
+  const matchedUsers = useMemo(
+    () =>
+      users.filter((user) =>
+        `${user.name} ${user.email} ${user.role}`
+          .toLowerCase()
+          .includes(searchValue.toLowerCase())
+      ),
+    [users, searchValue]
+  );
   const pageSize = 10;
   const totalPage = useMemo(
-    () => Math.ceil(users.length / pageSize),
-    [users, pageSize]
+    () => Math.ceil(matchedUsers.length / pageSize),
+    [matchedUsers, pageSize]
   );
 
   const displayedUsers = useMemo(() => {
@@ -52,7 +61,19 @@ export const AdminPage = () => {
   }, []);
 
   const onDeleteUsers = (userIds: string[]) => {
-    setUsers(users.filter((u) => !userIds.includes(u.id)));
+    const usersAfterDelete = users.filter((u) => !userIds.includes(u.id));
+    setUsers(usersAfterDelete);
+    setSeletedUserIds(selectedUserIds.filter((id) => !userIds.includes(id)));
+
+    // in case the bulk delete is happened on last page,
+    // if there are still users left, should try to go to the previous page, rather than going to zero state
+    const startIndex = (activePage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const usersOnCurrentPage = usersAfterDelete.slice(startIndex, endIndex);
+
+    if (usersOnCurrentPage.length === 0 && activePage > 1) {
+      setActivePage((prevActivePage) => prevActivePage - 1);
+    }
   };
 
   const toggleUserSelection = (userId: string, isSelected: boolean) => {
@@ -87,7 +108,11 @@ export const AdminPage = () => {
 
   return (
     <div className="adminPage">
-      <SearchBar currentValue={searchValue} onSubmit={handleSearchSubmit} />
+      <SearchBar
+        currentValue={searchValue}
+        onSubmit={handleSearchSubmit}
+        searchDisabled={!users.length}
+      />
       <div className="adminPage-contentContainer ">
         {isLoading ? (
           <div>Loading...</div>
@@ -103,23 +128,25 @@ export const AdminPage = () => {
           />
         )}
         {displayedUsers.length ? null : (
-          <UserDataZeroState searchValue={searchValue} />
+          <UserDataZeroState
+            searchValue={searchValue}
+            hasUsers={users.length > 0}
+          />
         )}
       </div>
       <div
         className="adminPage-bottomActions"
         style={{ visibility: displayedUsers.length ? 'visible' : 'hidden' }}
       >
-        <div className="adminPage-deleteSelected">
-          <button
-            className={`button-md ${selectedUserIds.length ? 'button-secondary' : 'button-disabled'}`}
-            onClick={() => {
-              onDeleteUsers(selectedUserIds);
-            }}
-          >
-            Delete Selected
-          </button>
-        </div>
+        <button
+          className={`adminPage-deleteSelectedButton ${selectedUserIds.length ? 'button-secondary' : 'button-disabled'}`}
+          onClick={() => {
+            onDeleteUsers(selectedUserIds);
+            setIsBulkSelected(false);
+          }}
+        >
+          Delete Selected
+        </button>
         <div className="adminPage-pagination">
           <PaginationBar
             currentPage={activePage}

@@ -3,67 +3,84 @@
 $row-height: 45px;
 
 .userTable {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-    height: calc($row-height * 11);
-  
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  height: calc($row-height * 11);
+  table-layout: fixed;
+
+  .userTable-row {
+    display: flex;
+    align-items: center;
+    border: none;
+    height: $row-height;
+    box-sizing: border-box;
+    border-bottom: 1px solid lib.$color-grey-100;
+    @include lib.set-box-shadow('xs', 'grey', 'sm');
+
+    &.userTable-selectedRow {
+      background-color: lib.$color-grey-100;
+      border-bottom: 1px solid lib.$color-grey-200;
+    }
+
+    &.removing {
+      transition: all 0.25s ease-out;
+      opacity: 0;
+      transform: scaleY(0);
+      height: 0;
+    }
+
+    .userTable-rowElement,
+    .userTable-headerElement {
+      flex: 1;
+      display: table-cell;
+      text-align: start;
+      flex-shrink: 0;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .userTable-rowElement {
+      @include lib.typography-text('md', 'regular');
+    }
+
+    .userTable-headerElement {
+      @include lib.typography-text('md', 'semibold');
+    }
+  }
+
+  .userTable-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .userTable-actionIcon {
+    height: 28px;
+    width: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: lib.$color-grey-100;
+    }
+  }
+}
+
+@include lib.mobile-size {
+  .userTable {
     .userTable-row {
-      display: flex;
-      align-items: center;
-      border: none;
-      height:$row-height;
-      box-sizing: border-box;
-      border-bottom: 1px solid lib.$color-grey-100;
-      @include lib.set-box-shadow('xs','grey','sm');
-
-      &.userTable-selectedRow{
-        background-color: lib.$color-grey-100;
-        border-bottom: 1px solid lib.$color-grey-200;
-      }
-
-      &.removing {
-        transition: all 0.25s ease-out;
-        opacity: 0;
-        transform: scaleY(0);
-        height: 0;
-      }
-
-      .userTable-rowElement, .userTable-headerElement{
-        flex: 1; 
-        display: flex;
-        text-align: start; 
-        flex-direction: row;
-        align-items: center;
-      }
-
       .userTable-rowElement {
-        @include lib.typography-text('md', 'regular')
+        @include lib.typography-text('sm', 'regular');
       }
 
       .userTable-headerElement {
-        @include lib.typography-text('md', 'semibold');
+        @include lib.typography-text('sm', 'semibold');
       }
     }
-
-    .userTable-actions{
-        display: flex;
-        flex-direction: row;
-        gap: 8px
-    }
-
-    .userTable-actionIcon{
-        height: 28px;
-        width: 28px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 4px;
-        cursor: pointer;
-
-        &:hover {
-            background-color: lib.$color-grey-100;
-        }
-    }
   }
-  
+}

@@ -4,11 +4,13 @@ import { SearchIcon } from '../../icons/icon';
 interface SearchBarProps {
   currentValue: string;
   onSubmit: (value: string) => void;
+  searchDisabled?: boolean;
 }
 
 export const SearchBar = ({
   currentValue = '',
   onSubmit = () => {},
+  searchDisabled = false,
 }: SearchBarProps) => {
   const [value, setValue] = useState<string>(currentValue);
   const [isComposing, setIsComposing] = useState<boolean>(false);
@@ -56,6 +58,7 @@ export const SearchBar = ({
         onCompositionStart={handleCompositionStart}
         onCompositionEnd={handleCompositionEnd}
         onKeyDown={handleKeyDown}
+        disabled={searchDisabled}
       />
       {value.length ? (
         <button
@@ -63,12 +66,12 @@ export const SearchBar = ({
           className="button-sm button-secondary"
           onClick={() => setValue('')}
         >
-          Clear Input
+          Clear
         </button>
       ) : null}
       <button
         data-testid="searchBar-searchButton"
-        className="button-sm button-primary"
+        className={`button-sm${searchDisabled ? ' button-disabled' : ' button-primary'}`}
         onClick={handleOnSearchButtonClick}
       >
         Search
