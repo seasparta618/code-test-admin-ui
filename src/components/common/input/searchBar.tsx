@@ -63,7 +63,7 @@ export const SearchBar = ({
       {value.length ? (
         <button
           data-testid="searchBar-cleanupButton"
-          className="button-sm button-secondary"
+          className="searchBar-button button-secondary"
           onClick={() => setValue('')}
         >
           Clear
@@ -71,7 +71,7 @@ export const SearchBar = ({
       ) : null}
       <button
         data-testid="searchBar-searchButton"
-        className={`button-sm${searchDisabled ? ' button-disabled' : ' button-primary'}`}
+        className={`searchBar-button ${searchDisabled ? ' button-disabled' : ' button-primary'}`}
         onClick={handleOnSearchButtonClick}
       >
         Search

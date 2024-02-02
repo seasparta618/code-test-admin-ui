@@ -61,15 +61,24 @@
   }
 }
 
-@include lib.mobile-size {
-  .searchBar {
-    button {
-      height: 24px;
-      display: flex;
-      padding: 0;
-      align-items: center;
-      justify-content: center;
-      @include lib.typography-text('xs', 'semibold');
-    }
+.searchBar-button {
+  height: 36px;
+  border-radius: 4px;
+  display: flex;
+  padding: 0 4px;
+  align-items: center;
+  justify-content: center;
+  @include lib.typography-text('md', 'semibold');
+}
+
+@include lib.touch {
+  .searchBar-button,
+  .searchBar-button {
+    height: 24px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include lib.typography-text('xs', 'semibold');
   }
 }

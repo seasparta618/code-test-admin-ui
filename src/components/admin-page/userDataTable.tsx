@@ -1,7 +1,7 @@
 // UserDataTable.tsx
 import React from 'react';
 import { User } from '../../types/user';
-import { CrossIcon } from '../icons/icon';
+import { CrossIcon, EditIcon, RemoveIcon } from '../icons/icon';
 
 interface UserDataTableProps {
   users: User[];
@@ -71,10 +71,16 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
             <td className="userTable-rowElement">{user.role}</td>
             <td className="userTable-rowElement userTable-actions">
               <span
-                className="userTable-actionIcon"
+                className="userTable-editIcon"
                 onClick={() => onDeleteUsers([user.id])}
               >
-                <CrossIcon />
+                <EditIcon />
+              </span>
+              <span
+                className="userTable-removeIcon"
+                onClick={() => onDeleteUsers([user.id])}
+              >
+                <RemoveIcon />
               </span>
             </td>
           </tr>
