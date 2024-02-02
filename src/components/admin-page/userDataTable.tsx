@@ -21,7 +21,6 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
   isBulkSelected,
   setIsBulkSelected,
 }) => {
-  
   const handleRowSelectionChange = (userId: string) => {
     const updatedUsers = users.map((user) => {
       if (user.id === userId) {
@@ -34,17 +33,24 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
   };
 
   const handleOnBulkSelect = () => {
-    const updateUsers = users.map(user => { user.isSelected = !isBulkSelected; return user }
-    )
+    const updateUsers = users.map((user) => {
+      user.isSelected = !isBulkSelected;
+      return user;
+    });
     onDisplayedUsersChange(updateUsers);
     setIsBulkSelected(!isBulkSelected);
-  }
+  };
 
   return (
     <table className="userTable">
       <tr className="userTable-row">
         <th className="userTable-headerElement">
-          <input type="checkbox" className="checkbox-input checkbox-sm" onClick={handleOnBulkSelect} checked={isBulkSelected}/>
+          <input
+            type="checkbox"
+            className="checkbox-input checkbox-sm"
+            onClick={handleOnBulkSelect}
+            checked={isBulkSelected}
+          />
         </th>
         <th className="userTable-headerElement">Name</th>
         <th className="userTable-headerElement">Email</th>
@@ -54,8 +60,9 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
       {users.map((user) => (
         <tr
           key={user.id}
-          className={`userTable-row ${user.isSelected ? ' userTable-selectedRow' : ''
-            }`}
+          className={`userTable-row ${
+            user.isSelected ? ' userTable-selectedRow' : ''
+          }`}
         >
           <td className="userTable-rowElement">
             <input

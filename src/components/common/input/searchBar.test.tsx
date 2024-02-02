@@ -8,10 +8,10 @@ describe('BuildSearchBar', () => {
 
   const renderSearchBar = () => {
     render(<SearchBar currentValue="" onSubmit={mockOnSubmit} />);
-  }
+  };
 
   it('renders search input and buttons correctly', () => {
-    renderSearchBar()
+    renderSearchBar();
     expect(
       screen.getByPlaceholderText(/search by name, email or role/i)
     ).toBeInTheDocument();
@@ -24,7 +24,7 @@ describe('BuildSearchBar', () => {
   });
 
   it('displays search and cleanup buttons when input is not empty', () => {
-    renderSearchBar()
+    renderSearchBar();
 
     fireEvent.change(
       screen.getByPlaceholderText(/Search by name, email or role/i),
@@ -37,7 +37,7 @@ describe('BuildSearchBar', () => {
   });
 
   it('calls onSubmit when search button is clicked', () => {
-    renderSearchBar()
+    renderSearchBar();
 
     const input = screen.getByPlaceholderText(/search by name, email or role/i);
     fireEvent.change(input, { target: { value: 'test' } });
@@ -46,7 +46,7 @@ describe('BuildSearchBar', () => {
   });
 
   it('calls onSubmit when enter is pressed', () => {
-    renderSearchBar()
+    renderSearchBar();
 
     const input = screen.getByPlaceholderText(/search by name, email or role/i);
     fireEvent.change(input, { target: { value: 'test' } });
@@ -55,7 +55,7 @@ describe('BuildSearchBar', () => {
   });
 
   it('press enter with empty value will still fire onSubmit', () => {
-    renderSearchBar()
+    renderSearchBar();
 
     const input = screen.getByTestId('searchBar-input');
     // input some value first, then delete, and mock enter pressed
@@ -66,7 +66,7 @@ describe('BuildSearchBar', () => {
   });
 
   it('should clean up input when clear button is clicked', () => {
-    renderSearchBar()
+    renderSearchBar();
 
     const input = screen.getByPlaceholderText(/search by name, email or role/i);
     fireEvent.change(input, { target: { value: 'test' } });
