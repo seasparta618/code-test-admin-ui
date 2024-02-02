@@ -59,10 +59,12 @@ $checkbox-input-ticker-dimensions: (
     background-color: lib.$color-grey-100;
   }
 
-  &:hover {
-    &:not(:disabled) {
-      border-color: lib.$color-grey-300;
-      background-color: lib.$color-grey-100;
+  @include lib.desktop-size {
+    &:hover {
+      &:not(:disabled) {
+        border-color: lib.$color-grey-300;
+        background-color: lib.$color-grey-100;
+      }
     }
   }
 }

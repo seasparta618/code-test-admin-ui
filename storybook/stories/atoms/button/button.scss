@@ -125,19 +125,21 @@ $button-color-hover-border-map: (
       }
     }
 
-    &:hover {
-      background-color: map-get(
-        $button-color-hover-background-map,
-        $color-name
-      );
-      border-color: map-get($button-color-hover-border-map, $color-name);
-    }
-
     &:active {
       box-shadow:
         inset 0 0 3px rgba(map-get($button-color-map, $color-name), 1),
         0 4px 6px rgba(map-get($button-color-map, $color-name), 0.7);
       background-color: darken(map-get($button-color-map, $color-name), 20%);
+    }
+
+    @include lib.desktop-size {
+      &:hover {
+        background-color: map-get(
+          $button-color-hover-background-map,
+          $color-name
+        );
+        border-color: map-get($button-color-hover-border-map, $color-name);
+      }
     }
 
     &.button-ghost {
@@ -151,19 +153,25 @@ $button-color-hover-border-map: (
         }
       }
 
-      &:hover {
-        background-color: map-get(
-          $button-color-hover-background-map,
-          $color-name
-        );
-        border-color: map-get($button-color-hover-border-map, $color-name);
-        @include lib.set-box-shadow('md', $color-name, 'md');
-      }
-
       &:active {
         box-shadow:
           inset 1px 1px 3px rgba(map-get($button-color-map, $color-name), 1),
           inset 0 4px 6px rgba(map-get($button-color-map, $color-name), 0.7);
+        background-color: map-get(
+          $button-color-hover-background-map,
+          $color-name
+        );
+      }
+
+      @include lib.desktop-size {
+        &:hover {
+          background-color: map-get(
+            $button-color-hover-background-map,
+            $color-name
+          );
+          border-color: map-get($button-color-hover-border-map, $color-name);
+          @include lib.set-box-shadow('md', $color-name, 'md');
+        }
       }
     }
   }
@@ -175,6 +183,7 @@ $button-color-hover-border-map: (
   background-color: lib.$color-grey-100;
   border: 1px solid lib.$color-grey-200;
   color: lib.$color-grey-300;
+  pointer-events: none;
   @include lib.set-box-shadow('sm', 'grey', 'md');
 
   &:hover {
