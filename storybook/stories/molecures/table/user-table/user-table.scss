@@ -1,19 +1,23 @@
 @use '../../../lib/lib' as lib;
 
+$row-height: 45px;
+
 .userTable {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
+    height: calc($row-height * 11);
   
-    .userTable-tr {
+    .userTable-row {
       display: flex;
       align-items: center;
       border: none;
-      height: 44px;
+      height:$row-height;
+      box-sizing: border-box;
       border-bottom: 1px solid lib.$color-grey-100;
       @include lib.set-box-shadow('xs','grey','sm');
 
-      &.userTable-trSelected{
+      &.userTable-selectedRow{
         background-color: lib.$color-grey-100;
         border-bottom: 1px solid lib.$color-grey-200;
       }
@@ -25,7 +29,7 @@
         height: 0;
       }
 
-      .userTable-td, .userTable-th{
+      .userTable-rowElement, .userTable-headerElement{
         flex: 1; 
         display: flex;
         text-align: start; 
@@ -33,11 +37,11 @@
         align-items: center;
       }
 
-      .userTable-td {
+      .userTable-rowElement {
         @include lib.typography-text('md', 'regular')
       }
 
-      .userTable-th {
+      .userTable-headerElement {
         @include lib.typography-text('md', 'semibold');
       }
     }

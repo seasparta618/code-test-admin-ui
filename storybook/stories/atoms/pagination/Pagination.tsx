@@ -52,7 +52,7 @@ export const BuildPagination = ({ initialSelectedPage = 1, pageRange = [1, 2, 3,
         {pageRange.map((pageNumber) => {
             return (
                 <div key={pageNumber}
-                    className={`iconButton-md button-${buttonStyle}${pageNumber === currentPage ? ' pagination-active' : ' button-ghost'}`}
+                    className={`iconButton-md button-${buttonStyle}${pageNumber === currentPage ? ' pagination-activeButton' : ' button-ghost'}`}
                     onClick={() => pageNumber === currentPage ? null : setCurrentPage(pageNumber)}>{pageNumber}
                 </div>)
         })}

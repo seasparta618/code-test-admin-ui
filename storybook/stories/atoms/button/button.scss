@@ -98,8 +98,10 @@ $button-color-hover-border-map: (
         box-sizing: border-box;
         cursor: pointer;
         user-select: none;
+        align-items: center;
+        justify-content: center;
         border-radius: $radius;
-        @include lib.typography-text($typography, 'regular');
+        @include lib.typography-text($typography, 'semibold');
     }
 
     .iconButton-#{$size} {

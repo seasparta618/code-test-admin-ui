@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import { usePagination } from '../../../utils/usePagination';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   DoublChevronRightIcon,
   DoubleChevronLeftIcon,
 } from '../../icons/icon';
+import { usePagination } from '../../../utils/usePagination';
 
 interface PaginationBarProps {
   currentPage: number;
@@ -22,17 +22,17 @@ export const PaginationBar: FC<PaginationBarProps> = ({
   totalButtonNumber,
   onPageChange = () => {},
 }) => {
-  if (!currentPage || !totalPage) {
-    return null;
-  }
   const pageRange = usePagination({
     currentPage,
     totalPage,
     totalButtonNumber,
   });
-  if (!pageRange.length) return null;
 
-  const buttonStyleClass = 'button-tertiary button-ghost';
+  if (!currentPage || !totalPage || !pageRange.length) {
+    return null;
+  }
+
+  const buttonStyleClass = 'button-primary button-ghost';
 
   const onSpecialButtonClick = (buttonType: specialButtonType) => {
     switch (buttonType) {
@@ -94,9 +94,9 @@ export const PaginationBar: FC<PaginationBarProps> = ({
         return (
           <div
             key={pageNumber}
-            className={`iconButton-md button-tertiary ${
+            className={`iconButton-md button-primary ${
               pageNumber === currentPage
-                ? ' pagination-active'
+                ? ' pagination-activeButton'
                 : ' button-ghost'
             }`}
             onClick={() =>
