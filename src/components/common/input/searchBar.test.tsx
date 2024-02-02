@@ -16,10 +16,10 @@ describe('BuildSearchBar', () => {
       screen.getByPlaceholderText(/search by name, email or role/i)
     ).toBeInTheDocument();
     expect(
-      screen.queryByRole('button', { name: /search/i })
+      screen.getByTestId('searchBar-searchButton')
     ).toBeInTheDocument();
     expect(
-      screen.queryByRole('button', { name: /clear/i })
+      screen.queryByTestId('searchBar-cleanupButton')
     ).not.toBeInTheDocument();
   });
 
