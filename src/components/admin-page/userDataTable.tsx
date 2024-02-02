@@ -10,6 +10,7 @@ interface UserDataTableProps {
   setSelectedUserIds: (userIds: string[]) => void;
   setIsBulkSelected: (checked: boolean) => void;
   toggletUserSelection: (userId: string, isSelected: boolean) => void;
+  onDeleteUsers: (userIds: string[]) => void;
 }
 
 export const UserDataTable: React.FC<UserDataTableProps> = ({
@@ -19,6 +20,7 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
   setSelectedUserIds,
   setIsBulkSelected,
   toggletUserSelection,
+  onDeleteUsers,
 }) => {
   const toggleBulkSelection = (newBulkSelected: boolean) => {
     setSelectedUserIds(newBulkSelected ? users.map((u) => u.id) : []);
@@ -62,7 +64,10 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
           <td className="userTable-rowElement">{user.email}</td>
           <td className="userTable-rowElement">{user.role}</td>
           <td className="userTable-rowElement userTable-actions">
-            <span className="userTable-actionIcon">
+            <span
+              className="userTable-actionIcon"
+              onClick={() => onDeleteUsers([user.id])}
+            >
               <CrossIcon />
             </span>
           </td>

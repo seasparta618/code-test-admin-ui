@@ -51,6 +51,10 @@ export const AdminPage = () => {
     loadUsers();
   }, []);
 
+  const onDeleteUsers = (userIds: string[]) => {
+    setUsers(users.filter((u) => !userIds.includes(u.id)));
+  };
+
   const toggleUserSelection = (userId: string, isSelected: boolean) => {
     const newSelectedIds = isSelected
       ? selectedUserIds.filter((id) => id !== userId)
@@ -72,6 +76,7 @@ export const AdminPage = () => {
     if (pageNumber !== activePage) {
       setSeletedUserIds([]);
     }
+    setIsBulkSelected(false);
     setActivePage(pageNumber);
   };
 
@@ -94,6 +99,7 @@ export const AdminPage = () => {
             isBulkSelected={isBulkSelected}
             setIsBulkSelected={setIsBulkSelected}
             toggletUserSelection={toggleUserSelection}
+            onDeleteUsers={onDeleteUsers}
           />
         )}
         {displayedUsers.length ? null : (
@@ -107,6 +113,9 @@ export const AdminPage = () => {
         <div className="adminPage-deleteSelected">
           <button
             className={`button-md ${selectedUserIds.length ? 'button-secondary' : 'button-disabled'}`}
+            onClick={() => {
+              onDeleteUsers(selectedUserIds);
+            }}
           >
             Delete Selected
           </button>
