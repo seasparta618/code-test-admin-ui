@@ -178,16 +178,16 @@ $button-color-hover-border-map: (
 }
 
 .button-disabled {
-  cursor: not-allowed !important;
   user-select: none !important;
   background-color: lib.$color-grey-100;
   border: 1px solid lib.$color-grey-200;
   color: lib.$color-grey-300;
-  pointer-events: none;
+  cursor: not-allowed !important;
   @include lib.set-box-shadow('sm', 'grey', 'md');
+}
 
-  &:hover {
-    background-color: lib.$color-grey-100;
-    border-color: lib.$color-grey-200;
+@include lib.touch {
+  .button-disabled {
+    pointer-events: none;
   }
 }
