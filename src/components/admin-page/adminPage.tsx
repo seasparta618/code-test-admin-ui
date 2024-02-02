@@ -40,6 +40,15 @@ export const AdminPage = () => {
     setDisplayedUsers(newDisplayedUsers);
   };
 
+  const onUserDataChange = (users: DisplayedUser[]) => {
+    setDisplayedUsers(users);
+    if (isBulkSelected && users.filter(user => user.isSelected).length === 0){
+      setIsBulkSelected(false);
+    }else if (!isBulkSelected && users.filter(user => !user.isSelected).length === 0){
+      setIsBulkSelected(true);
+    }
+  }
+
   // load all the users only when the component is initialized and mounted
   useEffect(() => {
     const loadUsers = async () => {
@@ -75,7 +84,7 @@ export const AdminPage = () => {
         ) : (
           <UserDataTable
             users={displayedUsers}
-            onUserDataChange={setDisplayedUsers}
+            onUserDataChange={onUserDataChange}
             isBulkSelected={isBulkSelected}
             setIsBulkSelected={setIsBulkSelected}
           />

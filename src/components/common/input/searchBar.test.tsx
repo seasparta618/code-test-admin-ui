@@ -15,9 +15,7 @@ describe('BuildSearchBar', () => {
     expect(
       screen.getByPlaceholderText(/search by name, email or role/i)
     ).toBeInTheDocument();
-    expect(
-      screen.getByTestId('searchBar-searchButton')
-    ).toBeInTheDocument();
+    expect(screen.getByTestId('searchBar-searchButton')).toBeInTheDocument();
     expect(
       screen.queryByTestId('searchBar-cleanupButton')
     ).not.toBeInTheDocument();

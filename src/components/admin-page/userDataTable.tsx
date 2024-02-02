@@ -17,7 +17,7 @@ interface UserDataTableProps {
 
 export const UserDataTable: React.FC<UserDataTableProps> = ({
   users,
-  onUserDataChange: onDisplayedUsersChange,
+  onUserDataChange,
   isBulkSelected,
   setIsBulkSelected,
 }) => {
@@ -29,7 +29,7 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
       }
       return user;
     });
-    onDisplayedUsersChange(updatedUsers);
+    onUserDataChange(updatedUsers);
   };
 
   const handleOnBulkSelect = () => {
@@ -37,7 +37,7 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
       user.isSelected = !isBulkSelected;
       return user;
     });
-    onDisplayedUsersChange(updateUsers);
+    onUserDataChange(updateUsers);
     setIsBulkSelected(!isBulkSelected);
   };
 
