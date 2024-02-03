@@ -55,16 +55,22 @@ export const AdminCard: FC<AdminCardProps> = ({ users, onUserChange }) => {
   // load all the users only when the component is initialized and mounted
 
   const handleDeleteUsers = (userIds: string[]) => {
-    const usersAfterDelete = users.filter((u) => !userIds.includes(u.id));
-    onUserChange(usersAfterDelete);
     setSelectedUserIds(selectedUserIds.filter((id) => !userIds.includes(id)));
     setInEditingUsers(inEditingUsers.filter((u) => !userIds.includes(u.id)));
 
+
+    const usersAfterDelete = users.filter((u) => !userIds.includes(u.id));
+    const leftDisplayedUsers = displayedUsers.filter(u => !userIds.includes(u.id))
+
     // if currently the user is stayed on last page and deleted to no result,
     // if still page existing, need to jump to current page - 1 or 1
-    if (usersAfterDelete.length && activePage > 1) {
-      setActivePage((prevActivePage) => prevActivePage - 1);
+    if (!leftDisplayedUsers) {
+      setIsBulkSelected(false);
+      if (usersAfterDelete.length && activePage > 1) {
+        setActivePage((prevActivePage) => prevActivePage - 1);
+      }
     }
+    onUserChange(usersAfterDelete);
   };
 
   const handleUserSelection = (userId: string, isSelected: boolean) => {
