@@ -1,40 +1,61 @@
-# Getting Started with Create React App
+# Project README
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+This project is a React application created using the create-react-app scaffolding tool. It includes a comprehensive implementation of Storybook, which allows for an interactive exploration and testing of the various React components used throughout the application.
 
-## Available Scripts
+## Special Considerations
+This React project incorporates several design and user experience considerations:
 
-In the project directory, you can run:
+### Selective Activation of Delete Button: 
+The 'Delete Selected' button is only active when at least one table row is selected. If no rows are selected, the button remains disabled.
 
-### `npm start`
+### More Friendly & Responable Bulk Selection: 
+The bulk select checkbox responds to user actions for a seamless experience. It automatically checks when all rows are selected individually and unchecks when the last selected row is deselected.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Triggering Search: 
+Unlike the instantaneous search on typing, the project requires a user to either press 'Enter' or click the 'Search' button in the search bar to initiate the search.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Clear Input Option: 
+A clear input button in the search bar allows users to erase all input text. However, initiating the search still requires pressing 'Enter' or the 'Search' button.
 
-### `npm test`
+### User-Friendly Editing: 
+In edit mode, an additional 'Revert' button appears between the save and delete buttons. This allows users to cancel all edits and exit the editing state conveniently.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Page Transition Effects: 
+Switching pages resets all current page effects, including edit and selected states. This design choice reflects the assumption that page switching indicates the user's intent to cease current page interactions.
 
-### `npm run build`
+### No Result and Empty State Handling: 
+The application gracefully handles scenarios with no matching search results or when there are no users in the system, informing users appropriately.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Fixed Table Height: 
+To maintain a consistent page layout and prevent flickering or size changes, the table height is fixed. This stability enhances the user experience by keeping the pagination bar position constant.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+These considerations were implemented to enhance usability and ensure a smooth, user-friendly interface.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Project Features
 
-### `npm run eject`
+### React 
+Create-App Foundation: The project is bootstrapped with create-react-app, ensuring a solid and tested foundation for React development.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Storybook Integration: 
+A key feature of this project is the integration of Storybook. This tool provides a sandbox to build and visualize UI components in isolation, making it easier to develop and review the appearance and behavior of these components without the need to run the entire application.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Component Stories: 
+Most, if not all, components in the project have corresponding stories in Storybook. These stories are designed to demonstrate different states and use-cases for each component, providing a comprehensive overview of the components' capabilities.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Custom SCSS Implementation: 
+The styling of components is achieved using custom-written SCSS. This approach allows for greater control over the look and feel of the application and ensures that the styling is scalable and maintainable.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Development and Usage
+To run the project locally:
+
+Clone the repository to your local machine.
+Install the dependencies by running npm install.
+Start the application by running npm start. This will launch the app on the default React development server port in your browser.
+To view and interact with the Storybook components:
+
+Navigate to the Storybook directory within the project.
+Run npm run storybook. This will open the Storybook interface in your browser, where you can browse and interact with the component stories.
+Note on Ports
+The project adheres to the original configuration settings of the create-react-app package. Therefore, the application will run on the default port as specified by React's development server. There is no need for manual port configuration unless specifically required for your development environment.
+
