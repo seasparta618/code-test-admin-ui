@@ -1,0 +1,29 @@
+@use '/storybook/stories/lib/lib' as lib;
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  height: 100vh;
+  background-color: lib.$color-white;
+}
+
+.loading-state {
+  border: 8px solid lib.$color-grey-100;
+  border-top: 8px solid lib.$color-blue;
+  border-radius: 50%;
+  width: 5vh;
+  height: 5vh;
+  background-color: lib.$color-purple-400;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

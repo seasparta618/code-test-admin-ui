@@ -1,16 +1,110 @@
 @use '../../../storybook/stories/lib/lib' as lib;
 
 .adminPage {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding: 0 128px;
-    background-color: lib.$color-white;
-    gap: 32px;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
 }
 
-@include lib.mobile-size {
-    .adminPage {
-        padding: 0 32px;
+.adminCard {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  padding: 32px 128px;
+  gap: 32px;
+  background-color: transparent;
+}
+
+.adminCard-bottomActions {
+  display: grid;
+  height: auto;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 3fr 1fr;
+
+  .adminCard-deleteSelectedButton {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    padding: 0 8px;
+    border-radius: 4px;
+    height: 32px;
+    justify-content: flex-start;
+    cursor: pointer;
+    user-select: none;
+    @include lib.typography-text('sm', 'semibold');
+  }
+
+  .adminCard-pagination {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.adminCard-contentContainer {
+  height: auto;
+  width: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.adminCard-zeroContent {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  flex-grow: 1;
+  top: 0;
+  left: 0;
+  margin: 0 auto;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  backdrop-filter: blur(3px);
+  background-color: rgba(255, 255, 255, 0.3);
+  flex-direction: column;
+  gap: 32px;
+
+  .adminCard-zeroContentHeader {
+    color: lib.$color-grey-900;
+    @include lib.typography-text('xxl', 'semibold');
+  }
+
+  .adminCard-zeroContentText {
+    color: lib.$color-grey-700;
+    display: flex;
+    @include lib.typography-text('md', 'regular');
+  }
+}
+
+@include lib.touch {
+  .adminCard {
+    padding: 16px 32px;
+    gap: 16px;
+  }
+
+  .adminCard-bottomActions {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: auto;
+    gap: 16px;
+    @include lib.typography-text('md', 'regular');
+
+    .adminCard-deleteSelectedButton {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      height: 24px;
+      width: 100%;
     }
+  }
 }

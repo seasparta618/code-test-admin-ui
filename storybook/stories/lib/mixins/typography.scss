@@ -1,6 +1,6 @@
 @use 'sass:map';
 
-$default-font-family: 'Source Sans Pro, sans-serif';
+$default-font-family: 'Arial';
 
 $text-font-size-xs: 0.75rem;
 $text-font-size-sm: 0.875rem;
@@ -10,12 +10,12 @@ $text-font-size-xl: 1.25rem;
 $text-font-size-xxl: 1.5rem;
 
 $text-font-size-map: (
-    'xs': $text-font-size-xs,
-    'sm': $text-font-size-sm,
-    'md': $text-font-size-md,
-    'lg': $text-font-size-lg,
-    'xl': $text-font-size-xl,
-    'xxl': $text-font-size-xxl,
+  'xs': $text-font-size-xs,
+  'sm': $text-font-size-sm,
+  'md': $text-font-size-md,
+  'lg': $text-font-size-lg,
+  'xl': $text-font-size-xl,
+  'xxl': $text-font-size-xxl,
 );
 
 $text-line-height-xs: 1.125rem;
@@ -26,12 +26,12 @@ $text-line-height-xl: 1.875rem;
 $text-line-height-xxl: 2rem;
 
 $text-line-height-map: (
-    'xs': $text-line-height-xs,
-    'sm': $text-line-height-sm,
-    'md': $text-line-height-md,
-    'lg': $text-line-height-lg,
-    'xl': $text-line-height-xl,
-    'xxl': $text-line-height-xxl,
+  'xs': $text-line-height-xs,
+  'sm': $text-line-height-sm,
+  'md': $text-line-height-md,
+  'lg': $text-line-height-lg,
+  'xl': $text-line-height-xl,
+  'xxl': $text-line-height-xxl,
 );
 
 $text-weight-light: 300;
@@ -40,15 +40,15 @@ $text-weight-semibold: 600;
 $text-weight-bold: 700;
 
 $text-weight-map: (
-    'light': $text-weight-light,
-    'regular': $text-weight-regular,
-    'semibold': $text-weight-semibold,
-    'bold': $text-weight-bold,
+  'light': $text-weight-light,
+  'regular': $text-weight-regular,
+  'semibold': $text-weight-semibold,
+  'bold': $text-weight-bold,
 );
 
 @mixin typography-text($size: 'md', $weight: 'regular') {
-    font-family: $default-font-family;
-    font-size: map-get($text-font-size-map, $size);
-    line-height: map-get($text-line-height-map, $size);
-    font-weight: map-get($text-weight-map, $weight);
+  font-family: $default-font-family;
+  font-size: map-get($text-font-size-map, $size);
+  line-height: map-get($text-line-height-map, $size);
+  font-weight: map-get($text-weight-map, $weight);
 }

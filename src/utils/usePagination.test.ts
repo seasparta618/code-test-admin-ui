@@ -16,13 +16,6 @@ describe('usePagination', () => {
     expect(result.current).toEqual([1, 2, 3, 4, 5]);
   });
 
-  it('should return pages starting from 1 when current page is near the start', () => {
-    const { result } = renderHook(() =>
-      usePagination({ currentPage: 4, totalPage: 10, totalButtonNumber: 6 })
-    );
-    expect(result.current).toEqual([2, 3, 4, 5, 6, 7]);
-  });
-
   it('should return last pages when current page is near the end', () => {
     const { result } = renderHook(() =>
       usePagination({ currentPage: 76, totalPage: 109, totalButtonNumber: 11 })

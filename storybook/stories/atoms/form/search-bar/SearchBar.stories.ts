@@ -13,16 +13,16 @@ export default {
       control: { type: 'text' },
       defaultValue: '',
       description: 'Default value for the search bar',
-    }
+    },
   },
 };
 
 export const SearchBar = (args) => {
-  return BuildSearchBar ({...args});
+  return BuildSearchBar({ ...args });
 };
 
 SearchBar.args = {
   placeholder: 'Search by name, email or role',
   defaultValue: '',
-  onSubmit:(value) => console.log('The submitted search content is:', value)
+  onSubmit: (value) => console.log('The submitted search content is:', value),
 };

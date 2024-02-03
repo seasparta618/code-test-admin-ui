@@ -1,10 +1,12 @@
-import React from "react";
+import React from 'react';
 import './checkbox.scss';
 
 interface CheckboxProps {
-    size: 'sm' | 'md'
+  size: 'sm' | 'md';
 }
 
 export const BuildCheckbox = ({ size = 'sm' }: CheckboxProps) => {
-    return <input type='checkbox' className={`checkbox-input checkbox-${size}`} />
-}
+  return (
+    <input type="checkbox" className={`checkbox-input checkbox-${size}`} />
+  );
+};

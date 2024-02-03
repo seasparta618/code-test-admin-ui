@@ -6,44 +6,49 @@
 @use '/storybook/stories/lib/lib' as lib;
 
 @use './pages/admin-page.scss';
+@use './components/loading.scss';
 
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-        sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    height: 100%;
-    padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  padding: 0;
 }
 
 #root {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .mainPage {
-    min-height: 100vh; 
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    position: relative;
-    background-color: lib.$color-grey-100;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
 }
 
-.mainPage-header{
-    background-color: lib.$color-white;
-    position: sticky;
-    top: 0;
-    @include lib.set-box-shadow('xs', 'grey', 'xs');
+.mainPage-header {
+  background-color: lib.$color-white;
+  position: sticky;
+  top: 0;
+  @include lib.set-box-shadow('xs', 'grey', 'xs');
 }
 
-.mainPage-content{
-    display: flex;
-    width: 100%;
-    flex-grow: 1;
-    flex-direction: column;
+.mainPage-content {
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  flex-direction: column;
 }
-  
+
+@include lib.mobile-size {
+  .mainPage-content {
+    flex-grow: 0;
+  }
+}

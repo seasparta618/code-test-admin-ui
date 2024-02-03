@@ -1,6 +1,6 @@
 @use 'sass:color';
 
-$color-white: #FFF;
+$color-white: #fff;
 $color-black: #000;
 
 /*
@@ -8,7 +8,7 @@ $color-black: #000;
  while 500 is the base, so it will just be named like color-red, color-purple
 */
 
-$color-red: #FF0000;
+$color-red: #ff0000;
 
 $color-red-900: darken($color-red, 35%);
 
@@ -26,7 +26,7 @@ $color-red-200: lighten($color-red, 25%);
 
 $color-red-100: lighten($color-red, 35%);
 
-$color-blue: #0000FF;
+$color-blue: #0000ff;
 
 $color-blue-900: darken($color-blue, 35%);
 
@@ -44,7 +44,7 @@ $color-blue-200: lighten($color-blue, 25%);
 
 $color-blue-100: lighten($color-blue, 35%);
 
-$color-purple: #A020F0;
+$color-purple: #a020f0;
 
 $color-purple-900: darken($color-purple, 35%);
 

@@ -1,4 +1,4 @@
-import { AdminPage } from './components/pages/adminPage';
+import { AdminPage } from './components/admin-page/adminPage';
 import './styles/main.scss';
 
 export const App = () => {

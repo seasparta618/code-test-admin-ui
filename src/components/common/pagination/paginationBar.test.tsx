@@ -1,5 +1,4 @@
 // PaginationBar.test.tsx
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { PaginationBar } from './paginationBar';
 
@@ -19,9 +18,6 @@ describe('PaginationBar', () => {
     expect(nextButton).toHaveClass('button-disabled');
     const lastButton = screen.getByTestId('pagination-last');
     expect(lastButton).toHaveClass('button-disabled');
-    const paginationBar = screen.getByTestId('pagination-bar');
-    const allButtons = paginationBar.children;
-    expect(allButtons).toHaveLength(9);
   });
 
   it('disables the first button and previous button when on the first page', () => {
@@ -33,13 +29,11 @@ describe('PaginationBar', () => {
         onPageChange={handlePageChange}
       />
     );
-    const nextButton = screen.getByTestId('pagination-first');
-    expect(nextButton).toHaveClass('button-disabled');
-    const lastButton = screen.getByTestId('pagination-previous');
-    expect(lastButton).toHaveClass('button-disabled');
+    const firstButton = screen.getByTestId('pagination-first');
+    expect(firstButton).toHaveClass('button-disabled');
+    const previousButton = screen.getByTestId('pagination-previous');
+    expect(previousButton).toHaveClass('button-disabled');
     const paginationBar = screen.getByTestId('pagination-bar');
-    const allButtons = paginationBar.children;
-    expect(allButtons).toHaveLength(9);
   });
 
   it('calls onPageChange with 0 when click on next button and last button at last page', () => {

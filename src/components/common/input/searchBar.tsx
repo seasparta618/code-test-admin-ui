@@ -1,17 +1,21 @@
-import { useState } from 'react';
-import { CrossIcon, SearchIcon } from '../../icons/icon';
+import { useRef, useState } from 'react';
+import { SearchIcon } from '../../icons/icon';
 
 interface SearchBarProps {
   currentValue: string;
   onSubmit: (value: string) => void;
+  searchDisabled?: boolean;
 }
 
 export const SearchBar = ({
   currentValue = '',
   onSubmit = () => {},
+  searchDisabled = false,
 }: SearchBarProps) => {
   const [value, setValue] = useState<string>(currentValue);
   const [isComposing, setIsComposing] = useState<boolean>(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const placeholder = 'Search by name, email or role';
 
@@ -28,13 +32,15 @@ export const SearchBar = ({
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && !isComposing && value.length) {
+    if (event.key === 'Enter' && !isComposing) {
       onSubmit(value);
+      inputRef?.current?.blur();
     }
   };
 
   const handleOnSearchButtonClick = () => {
-    if (value.length) onSubmit(value);
+    onSubmit(value);
+    inputRef?.current?.blur();
   };
 
   return (
@@ -43,6 +49,7 @@ export const SearchBar = ({
         <SearchIcon size={20} />
       </span>
       <input
+        ref={inputRef}
         data-testid="searchBar-input"
         className="searchBar-input"
         placeholder={placeholder}
@@ -51,27 +58,24 @@ export const SearchBar = ({
         onCompositionStart={handleCompositionStart}
         onCompositionEnd={handleCompositionEnd}
         onKeyDown={handleKeyDown}
+        disabled={searchDisabled}
       />
       {value.length ? (
         <button
-          data-testid="searchBar-searchButton"
-          className="button-sm button-quatenary"
-          onClick={handleOnSearchButtonClick}
+          data-testid="searchBar-cleanupButton"
+          className="searchBar-button button-secondary"
+          onClick={() => setValue('')}
         >
-          Search
+          Clear
         </button>
       ) : null}
-      {value.length ? (
-        <span
-          data-testid="searchBar-cleanupIcon"
-          className="searchBar-icon searchBar-cleanupIcon"
-          onClick={() => {
-            setValue('');
-          }}
-        >
-          <CrossIcon size={20} />
-        </span>
-      ) : null}
+      <button
+        data-testid="searchBar-searchButton"
+        className={`searchBar-button ${searchDisabled ? ' button-disabled' : ' button-primary'}`}
+        onClick={handleOnSearchButtonClick}
+      >
+        Search
+      </button>
     </div>
   );
 };

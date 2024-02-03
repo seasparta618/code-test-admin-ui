@@ -3,74 +3,76 @@
 @use 'sass:list';
 
 $checkbox-size: (
-    'sm': 16px,
-    'md': 20px,
+  'sm': 16px,
+  'md': 20px,
 );
 
 $checkbox-input-ticker-dimensions: (
-    'sm': 10px,
-    'md': 12px,
+  'sm': 10px,
+  'md': 12px,
 );
 
 .checkbox-input {
-    appearance: none;
-    grid-area: cb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-self: start;
-    margin-top: 2px;
-    cursor: inherit;
-    height: 16px;
-    width: 16px;
-    border-radius: 4px;
-    border: 1.5px solid lib.$color-grey-700;
-    background-color: lib.$color-white;
+  appearance: none;
+  grid-area: cb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: start;
+  margin-top: 2px;
+  cursor: inherit;
+  height: 16px;
+  width: 16px;
+  border-radius: 4px;
+  border: 1.5px solid lib.$color-grey-700;
+  background-color: lib.$color-white;
+
+  &::before {
+    box-sizing: border-box;
+    display: inline-block;
+    content: '';
+    width: 18px;
+    height: 18px;
+    margin-top: -2px;
+    box-shadow: inset 16px 16px lib.$color-grey-700;
+    clip-path: polygon(14% 50%, 3% 65%, 52% 94%, 102% 12%, 87% 2%, 45% 70%);
+    transform: scale(0);
+  }
+
+  &:disabled {
+    background-color: lib.$color-grey-100;
+    border-color: lib.$color-grey-300;
+    cursor: not-allowed;
+    pointer-events: none;
 
     &::before {
-        box-sizing: border-box;
-        display: inline-block;
-        content: '';
-        width: 18px;
-        height: 18px;
-        margin-top: -2px;
-        box-shadow: inset 16px 16px lib.$color-grey-700;
-        clip-path: polygon(14% 50%, 3% 65%, 52% 94%, 102% 12%, 87% 2%, 45% 70%);
-        transform: scale(0);
+      box-shadow: inset 14px 14px lib.$color-grey-300;
     }
+  }
 
-    &:disabled {
-        background-color: lib.$color-grey-100;
-        border-color: lib.$color-grey-300;
-        cursor: not-allowed;
-        pointer-events: none;
+  &:checked::before {
+    transform: scale(1);
+  }
 
-        &::before {
-            box-shadow: inset 14px 14px lib.$color-grey-300;
-        }
-    }
+  &:checked:not(:disabled) {
+    border-color: lib.$color-grey-900;
+    background-color: lib.$color-grey-100;
+  }
 
-    &:checked::before {
-        transform: scale(1);
-    }
-
-    &:checked:not(:disabled) {
-        border-color: lib.$color-grey-900;
-        background-color: lib.$color-grey-100;
-    }
-
+  @include lib.desktop-size {
     &:hover {
-        &:not(:disabled) {
-            border-color: lib.$color-grey-300;
-            background-color: lib.$color-grey-100;
-        }
+      &:not(:disabled) {
+        border-color: lib.$color-grey-300;
+        background-color: lib.$color-grey-100;
+      }
     }
+  }
 }
 
 @each $size, $dimension in $checkbox-size {
-    .checkbox-#{$size} {
-        height: $dimension;
-        width: $dimension;
-        border-radius: 4px;
-    }
+  .checkbox-#{$size} {
+    height: $dimension;
+    width: $dimension;
+    border-radius: 4px;
+  }
 }

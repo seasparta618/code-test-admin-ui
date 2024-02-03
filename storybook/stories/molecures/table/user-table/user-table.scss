@@ -1,65 +1,146 @@
 @use '../../../lib/lib' as lib;
 
+$row-height: 45px;
+
 .userTable {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-  
-    .userTable-tr {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  height: calc($row-height * 11);
+  table-layout: fixed;
+
+  .userTable-row {
+    display: flex;
+    align-items: center;
+    border: none;
+    height: $row-height;
+    box-sizing: border-box;
+    border-bottom: 1px solid lib.$color-grey-100;
+    @include lib.set-box-shadow('xs', 'grey', 'sm');
+
+    &.userTable-selectedRow {
+      background-color: lib.$color-grey-100;
+      border-bottom: 1px solid lib.$color-grey-200;
+    }
+
+    &.removing {
+      transition: all 0.25s ease-out;
+      opacity: 0;
+      transform: scaleY(0);
+      height: 0;
+    }
+
+    .userTable-rowElement,
+    .userTable-headerElement {
+      flex: 1;
       display: flex;
+      text-align: start;
+      flex-shrink: 0;
       align-items: center;
-      border: none;
-      height: 44px;
-      border-bottom: 1px solid lib.$color-grey-100;
-      @include lib.set-box-shadow('xs','grey','sm');
-
-      &.userTable-trSelected{
-        background-color: lib.$color-grey-100;
-        border-bottom: 1px solid lib.$color-grey-200;
-      }
-
-      &.removing {
-        transition: all 0.25s ease-out;
-        opacity: 0;
-        transform: scaleY(0);
-        height: 0;
-      }
-
-      .userTable-td, .userTable-th{
-        flex: 1; 
-        display: flex;
-        text-align: start; 
-        flex-direction: row;
-        align-items: center;
-      }
-
-      .userTable-td {
-        @include lib.typography-text('md', 'regular')
-      }
-
-      .userTable-th {
-        @include lib.typography-text('md', 'semibold');
-      }
     }
 
-    .userTable-actions{
-        display: flex;
-        flex-direction: row;
-        gap: 8px
+    .userTable-rowElement {
+      @include lib.typography-text('md', 'regular');
     }
 
-    .userTable-actionIcon{
-        height: 28px;
-        width: 28px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 4px;
-        cursor: pointer;
-
-        &:hover {
-            background-color: lib.$color-grey-100;
-        }
+    .userTable-headerElement {
+      @include lib.typography-text('md', 'semibold');
     }
   }
-  
+
+  .userTable-textInput {
+    flex-grow: 1;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    border: none;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background-color: transparent;
+    color: lib.$color-grey-900;
+    @include lib.typography-text('md', 'regular');
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .userTable-activeInput {
+    border: 1px solid lib.$color-grey-400;
+  }
+
+  .userTable-editableTextInput {
+  }
+
+  .userTable-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .userTable-icon {
+    height: 28px;
+    width: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .userTable-removeIcon {
+    path {
+      stroke: lib.$color-red-200;
+    }
+
+    @include lib.desktop-size {
+      &:hover {
+        background-color: lib.$color-red-100;
+      }
+    }
+  }
+
+  .userTable-editIcon {
+    @include lib.desktop-size {
+      &:hover {
+        background-color: lib.$color-grey-100;
+      }
+    }
+  }
+}
+
+@include lib.touch {
+  .userTable {
+    .userTable-row {
+      .userTable-rowElement {
+        @include lib.typography-text('sm', 'regular');
+      }
+
+      .userTable-headerElement {
+        @include lib.typography-text('sm', 'semibold');
+      }
+    }
+
+    .userTable-actions {
+      display: flex;
+      flex-direction: row;
+      gap: 4px;
+
+      svg {
+        height: 16px;
+        width: 16px;
+      }
+    }
+
+    .userTable-icon {
+      height: 20px;
+      width: 20px;
+    }
+
+    .userTable-textInput {
+      @include lib.typography-text('sm', 'regular');
+    }
+  }
+}
