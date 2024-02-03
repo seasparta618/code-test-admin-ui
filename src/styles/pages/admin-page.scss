@@ -12,6 +12,7 @@
 
 .adminPage-bottomActions {
   display: grid;
+  height: auto;
   grid-template-rows: auto;
   grid-template-columns: 1fr 3fr 1fr;
 
@@ -85,7 +86,6 @@
     grid-template-rows: auto auto;
     grid-template-columns: auto;
     gap: 16px;
-    height: 24px;
     @include lib.typography-text('md', 'regular');
 
     .adminPage-deleteSelectedButton {

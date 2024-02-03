@@ -9,12 +9,11 @@ interface UserDataTableProps {
   isBulkSelected: boolean;
   inEditingUserIds: string[];
   inEditingUsers: User[];
-  setSelectedUserIds: (userIds: string[]) => void;
   handleSaveClick: (userId: string) => void;
   handleEditClick: (user: User) => void;
-  setIsBulkSelected: (checked: boolean) => void;
   toggletUserSelection: (userId: string, isSelected: boolean) => void;
-  onDeleteUsers: (userIds: string[]) => void;
+  handleDeleteUsers: (userIds: string[]) => void;
+  toggleBulkSelection: (newBulkValue: boolean) => void;
   handleCancelEditClick: (user: User) => void;
   handleUserEditChange: (
     userId: string,
@@ -31,17 +30,72 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
   inEditingUsers,
   handleSaveClick,
   handleEditClick,
-  setSelectedUserIds,
-  setIsBulkSelected,
   toggletUserSelection,
-  onDeleteUsers,
+  toggleBulkSelection,
+  handleDeleteUsers,
   handleCancelEditClick,
   handleUserEditChange,
 }) => {
-  const toggleBulkSelection = (newBulkSelected: boolean) => {
-    setSelectedUserIds(newBulkSelected ? users.map((u) => u.id) : []);
-    setIsBulkSelected(newBulkSelected);
+
+  const renderUserInput = (user: User, field: keyof User, fieldType: keyof User) => {
+    const inEditingUser = inEditingUsers.find((u) => u.id === user.id);
+    return (
+      <input
+        className={`userTable-textInput${inEditingUserIds.includes(user.id) ? ' userTable-activeInput' : ''}`}
+        value={inEditingUser ? inEditingUser[field] : user[field]}
+        disabled={!inEditingUserIds.includes(user.id)}
+        onChange={(e) =>
+          handleUserEditChange(user.id, fieldType, e.target.value)
+        }
+      />
+    );
   };
+  
+
+  const renderUserInfo = (user: User) => {
+    return (<>
+      <td className="userTable-rowElement" colSpan={4}>
+        <input
+          className={`userTable-textInput${inEditingUserIds.includes(user.id) ? ' userTable-activeInput' : ''}`}
+          value={
+            inEditingUsers.find((u) => u.id === user.id)?.name ??
+            user.name
+          }
+          disabled={!inEditingUserIds.includes(user.id)}
+          onChange={(e) =>
+            handleUserEditChange(user.id, 'name', e.target.value)
+          }
+        />
+      </td>
+      <td className="userTable-rowElement">
+        <input
+          className={`userTable-textInput${inEditingUserIds.includes(user.id) ? ' userTable-activeInput' : ''}`}
+          value={
+            inEditingUsers.find((u) => u.id === user.id)?.email ??
+            user.email
+          }
+          disabled={!inEditingUserIds.includes(user.id)}
+          onChange={(e) =>
+            handleUserEditChange(user.id, 'email', e.target.value)
+          }
+        />
+      </td>
+      <td className="userTable-rowElement">
+        <input
+          className={`userTable-textInput${inEditingUserIds.includes(user.id) ? ' userTable-activeInput' : ''}`}
+          value={
+            inEditingUsers.find((u) => u.id === user.id)?.role ??
+            user.role
+          }
+          disabled={!inEditingUserIds.includes(user.id)}
+          onChange={(e) =>
+            handleUserEditChange(user.id, 'role', e.target.value)
+          }
+        />
+      </td>
+    </>
+    )
+  }
 
   return (
     <table className="userTable">
@@ -52,7 +106,7 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
               type="checkbox"
               className="checkbox-input checkbox-sm"
               checked={isBulkSelected}
-              onClick={() => {
+              onChange={() => {
                 toggleBulkSelection(!isBulkSelected);
               }}
             />
@@ -74,7 +128,7 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
                 className="checkbox-input checkbox-sm"
                 type="checkbox"
                 checked={selectedUserIds.includes(user.id)}
-                onClick={() =>
+                onChange={() =>
                   toggletUserSelection(
                     user.id,
                     selectedUserIds.includes(user.id)
@@ -82,45 +136,7 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
                 }
               />
             </td>
-            <td className="userTable-rowElement" colSpan={4}>
-              <input
-                className={`userTable-textInput${inEditingUserIds.includes(user.id) ? ' userTable-activeInput' : ''}`}
-                value={
-                  inEditingUsers.find((u) => u.id === user.id)?.name ??
-                  user.name
-                }
-                disabled={!inEditingUserIds.includes(user.id)}
-                onChange={(e) =>
-                  handleUserEditChange(user.id, 'name', e.target.value)
-                }
-              />
-            </td>
-            <td className="userTable-rowElement">
-              <input
-                className={`userTable-textInput${inEditingUserIds.includes(user.id) ? ' userTable-activeInput' : ''}`}
-                value={
-                  inEditingUsers.find((u) => u.id === user.id)?.email ??
-                  user.email
-                }
-                disabled={!inEditingUserIds.includes(user.id)}
-                onChange={(e) =>
-                  handleUserEditChange(user.id, 'email', e.target.value)
-                }
-              />
-            </td>
-            <td className="userTable-rowElement">
-              <input
-                className={`userTable-textInput${inEditingUserIds.includes(user.id) ? ' userTable-activeInput' : ''}`}
-                value={
-                  inEditingUsers.find((u) => u.id === user.id)?.role ??
-                  user.role
-                }
-                disabled={!inEditingUserIds.includes(user.id)}
-                onChange={(e) =>
-                  handleUserEditChange(user.id, 'role', e.target.value)
-                }
-              />
-            </td>
+            {renderUserInfo(user)}
             <td className="userTable-rowElement userTable-actions">
               {!inEditingUserIds.includes(user.id) && (
                 <span
@@ -149,7 +165,7 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
               )}
               <span
                 className="userTable-icon userTable-removeIcon"
-                onClick={() => onDeleteUsers([user.id])}
+                onClick={() => handleDeleteUsers([user.id])}
               >
                 <RemoveIcon />
               </span>

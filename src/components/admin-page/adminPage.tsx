@@ -14,18 +14,17 @@ export const AdminPage = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [activePage, setActivePage] = useState<number>(1);
 
-  // for selection
-  const [selectedUserIds, setSeletedUserIds] = useState<string[]>([]);
-  const pageSize = 10;
+  const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
 
-  // for editting
   const [inEditingUsers, setInEditingUsers] = useState<User[]>([]);
   const inEditingUserIds = useMemo(
     () => inEditingUsers.map((u) => u.id),
     [inEditingUsers]
   );
 
-  // matched result is just affected by users and search value
+  const pageSize = 10;
+
+  // matched result is just affected by users and search value, this should not be manually set
   const matchedUsers = useMemo(
     () =>
       users.filter((user) =>
@@ -36,49 +35,47 @@ export const AdminPage = () => {
     [users, searchValue]
   );
 
+  // total page will be affected by length of matched user and page size, this should not be manually set
   const totalPage = useMemo(
     () => Math.ceil(matchedUsers.length / pageSize),
     [matchedUsers, pageSize]
   );
 
+  // users displayed on the current page, this should not be manually set
   const displayedUsers = useMemo(() => {
     const startIndex = (activePage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-
     return matchedUsers.slice(startIndex, endIndex);
-  }, [users, searchValue, matchedUsers, activePage, pageSize]);
+  }, [matchedUsers, activePage, pageSize]);
 
   // this can later be extended by a select / dropdown, if in that case, should use useState hook to define
 
   // load all the users only when the component is initialized and mounted
   useEffect(() => {
-    const loadUsers = async () => {
-      try {
-        const fetchedUsers = await fetchUsers();
-        setUsers(fetchedUsers);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
+    const loadUsers = () => {
+      fetchUsers()
+        .then((fetchedUsers) => {
+          setUsers(fetchedUsers);
+        })
+        .catch((error) => {
+          console.error('Failed to load users', error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     };
-
     loadUsers();
   }, []);
 
   const handleDeleteUsers = (userIds: string[]) => {
     const usersAfterDelete = users.filter((u) => !userIds.includes(u.id));
     setUsers(usersAfterDelete);
-    setSeletedUserIds(selectedUserIds.filter((id) => !userIds.includes(id)));
+    setSelectedUserIds(selectedUserIds.filter((id) => !userIds.includes(id)));
     setInEditingUsers(inEditingUsers.filter((u) => !userIds.includes(u.id)));
 
-    // in case the bulk delete is happened on last page,
-    // if there are still users left, should try to go to the previous page, rather than going to zero state
-    const startIndex = (activePage - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    const usersOnCurrentPage = usersAfterDelete.slice(startIndex, endIndex);
-
-    if (usersOnCurrentPage.length === 0 && activePage > 1) {
+    // if currently the user is stayed on last page and deleted to no result,
+    // if still page existing, need to jump to current page - 1 or 1
+    if (usersAfterDelete.length && activePage > 1) {
       setActivePage((prevActivePage) => prevActivePage - 1);
     }
   };
@@ -87,9 +84,9 @@ export const AdminPage = () => {
     const newSelectedIds = isSelected
       ? selectedUserIds.filter((id) => id !== userId)
       : [...selectedUserIds, userId];
-    setSeletedUserIds(newSelectedIds);
-    // special check, if all the users are ticked, this should be regarded as bulk selected ticked
-    // else, if all the users are un-ticked, this should be regarded as builk selected is unticked
+    setSelectedUserIds(newSelectedIds);
+    // special check, if all the users are checked, this should be regarded as bulk selected checked
+    // else, if all the users are unchecked, this should be regarded as bulk selected is unchecked
     if (isBulkSelected && !newSelectedIds.length) {
       setIsBulkSelected(false);
     } else if (
@@ -100,14 +97,20 @@ export const AdminPage = () => {
     }
   };
 
+  const handleBulkSelection = (newBulkSelected: boolean) => {
+    setSelectedUserIds(newBulkSelected ? displayedUsers.map((u) => u.id) : []);
+    setIsBulkSelected(newBulkSelected);
+  };
+
   const handlePageChange = (pageNumber: number) => {
-    if (pageNumber !== activePage) {
-      setSeletedUserIds([]);
-      setInEditingUsers([]);
-    }
+    // switch to next page will erase all the state on current page
+    setSelectedUserIds([]);
+    setInEditingUsers([]);
     setIsBulkSelected(false);
     setActivePage(pageNumber);
   };
+
+  /*===============edit part start===============*/
 
   const handleEditClick = (user: User) => {
     setInEditingUsers([...inEditingUsers, user]);
@@ -118,8 +121,8 @@ export const AdminPage = () => {
     field: keyof User,
     value: string
   ) => {
-    setInEditingUsers((prevEditingUsers) =>
-      prevEditingUsers.map((user) =>
+    setInEditingUsers((currentInEdittingUsers) =>
+      currentInEdittingUsers.map((user) =>
         user.id === userId ? { ...user, [field]: value } : user
       )
     );
@@ -144,6 +147,7 @@ export const AdminPage = () => {
     );
     setInEditingUsers(inEditingUsers.filter((u) => u.id !== userId));
   };
+  /*===============edit part end===============*/
 
   const handleSearchSubmit = (searchTerm: string) => {
     setSearchValue(searchTerm);
@@ -159,22 +163,22 @@ export const AdminPage = () => {
       />
       <div className="adminPage-contentContainer ">
         {isLoading ? (
+          // place holder for loading state
           <div>Loading...</div>
         ) : (
           <UserDataTable
             users={displayedUsers}
             selectedUserIds={selectedUserIds}
-            setSelectedUserIds={setSeletedUserIds}
             isBulkSelected={isBulkSelected}
             inEditingUsers={inEditingUsers}
-            setIsBulkSelected={setIsBulkSelected}
+            inEditingUserIds={inEditingUserIds}
+            toggleBulkSelection={handleBulkSelection}
             toggletUserSelection={handleUserSelection}
-            onDeleteUsers={handleDeleteUsers}
+            handleDeleteUsers={handleDeleteUsers}
             handleEditClick={handleEditClick}
             handleSaveClick={handleSaveClick}
             handleUserEditChange={handleUserEditChange}
             handleCancelEditClick={handleCancelEditClick}
-            inEditingUserIds={inEditingUserIds}
           />
         )}
         {displayedUsers.length ? null : (
