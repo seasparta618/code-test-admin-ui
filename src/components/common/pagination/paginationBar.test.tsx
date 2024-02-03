@@ -29,10 +29,10 @@ describe('PaginationBar', () => {
         onPageChange={handlePageChange}
       />
     );
-    const nextButton = screen.getByTestId('pagination-first');
-    expect(nextButton).toHaveClass('button-disabled');
-    const lastButton = screen.getByTestId('pagination-previous');
-    expect(lastButton).toHaveClass('button-disabled');
+    const firstButton = screen.getByTestId('pagination-first');
+    expect(firstButton).toHaveClass('button-disabled');
+    const previousButton = screen.getByTestId('pagination-previous');
+    expect(previousButton).toHaveClass('button-disabled');
     const paginationBar = screen.getByTestId('pagination-bar');
   });
 

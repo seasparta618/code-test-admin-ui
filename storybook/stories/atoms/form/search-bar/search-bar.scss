@@ -1,7 +1,7 @@
 @use '../../../lib/lib' as lib;
 
 .searchBar {
-  max-height: 42px;
+  height: 42px;
   display: flex;
   flex-grow: 1;
   gap: 4px;
@@ -52,6 +52,7 @@
   @include lib.typography-text('md', 'semibold');
 
   &::placeholder {
+    display: flex;
     color: lib.$color-grey-400;
     @include lib.typography-text('md', 'regular');
   }
@@ -63,7 +64,7 @@
 
 .searchBar-button {
   height: 36px;
-  border-radius: 4px;
+  border-radius: 8px;
   display: flex;
   padding: 0 4px;
   align-items: center;
@@ -72,7 +73,9 @@
 }
 
 @include lib.touch {
-  .searchBar-button,
+  .searchBar {
+    height: 38px;
+  }
   .searchBar-button {
     height: 24px;
     border-radius: 4px;

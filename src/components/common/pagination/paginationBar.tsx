@@ -66,7 +66,7 @@ export const PaginationBar: FC<PaginationBarProps> = ({
     return `pagination-button${
       isSpecialButtondisabled(buttonType)
         ? '  button-disabled'
-        : ` ${buttonStyleClass}`
+        : ` ${buttonStyleClass} ${buttonType}-page`
     }`;
   };
 

@@ -11,12 +11,12 @@ export const UserDataZeroState: FC<ZeroStateProps> = ({
   hasUsers,
 }) => {
   return (
-    <div className="adminPage-zeroContent">
+    <div className="adminCard-zeroContent" data-testid="zero-state-card">
       {hasUsers ? (
         <>
           <SearchIcon size={150} />
-          <div className="adminPage-zeroContentHeader">No exact matched</div>
-          <div className="adminPage-zeroContentText">
+          <div className="adminCard-zeroContentHeader">No exact matched</div>
+          <div className="adminCard-zeroContentText">
             {`There is not matched result${
               searchValue.length ? ` for your search "${searchValue}"` : ''
             }, try something else`}
@@ -25,7 +25,7 @@ export const UserDataZeroState: FC<ZeroStateProps> = ({
       ) : (
         <>
           <NoUsersIcon size={150} />
-          <div className="adminPage-zeroContentHeader">
+          <div className="adminCard-zeroContentHeader">
             There is no users in this system
           </div>
         </>

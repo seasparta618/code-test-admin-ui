@@ -46,7 +46,7 @@ body {
   flex-direction: column;
 }
 
-@include lib.touch {
+@include lib.mobile-size {
   .mainPage-content {
     flex-grow: 0;
   }

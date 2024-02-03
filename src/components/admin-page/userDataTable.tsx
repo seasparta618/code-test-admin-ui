@@ -71,11 +71,12 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
   };
 
   return (
-    <table className="userTable">
+    <table className="userTable" data-testid="user-table">
       <thead>
         <tr className="userTable-row">
           <th className="userTable-headerElement">
             <input
+              data-testid="bulk-select"
               type="checkbox"
               className="checkbox-input checkbox-sm"
               checked={isBulkSelected}
@@ -113,7 +114,8 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
             <td className="userTable-rowElement userTable-actions">
               {!inEditingUserIds.includes(user.id) && (
                 <span
-                  className="userTable-icon userTable-editIcon"
+                  datatest-id="edit-button"
+                  className="userTable-icon userTable-editIcon edit"
                   onClick={() => handleEditClick(user)}
                 >
                   <EditIcon />
@@ -122,7 +124,8 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
 
               {inEditingUserIds.includes(user.id) && (
                 <span
-                  className="userTable-icon"
+                  data-testid="save-button"
+                  className="userTable-icon save"
                   onClick={() => handleSaveClick(user.id)}
                 >
                   <SaveIcon />
@@ -130,14 +133,16 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
               )}
               {inEditingUserIds.includes(user.id) && (
                 <span
-                  className="userTable-icon"
+                  data-testid="cancel-button"
+                  className="userTable-icon cancel"
                   onClick={() => handleCancelEditClick(user)}
                 >
                   <RevertIcon />
                 </span>
               )}
               <span
-                className="userTable-icon userTable-removeIcon"
+                data-testid="remove-button"
+                className="userTable-icon userTable-removeIcon delete"
                 onClick={() => handleDeleteUsers([user.id])}
               >
                 <RemoveIcon />
