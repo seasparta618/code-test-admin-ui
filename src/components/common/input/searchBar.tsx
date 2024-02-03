@@ -7,7 +7,7 @@ interface SearchBarProps {
   searchDisabled?: boolean;
 }
 
-export const SearchBar:FC<SearchBarProps> = ({
+export const SearchBar: FC<SearchBarProps> = ({
   currentValue = '',
   onSubmit = () => {},
   searchDisabled = false,
