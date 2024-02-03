@@ -53,49 +53,21 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
   
 
   const renderUserInfo = (user: User) => {
-    return (<>
-      <td className="userTable-rowElement" colSpan={4}>
-        <input
-          className={`userTable-textInput${inEditingUserIds.includes(user.id) ? ' userTable-activeInput' : ''}`}
-          value={
-            inEditingUsers.find((u) => u.id === user.id)?.name ??
-            user.name
-          }
-          disabled={!inEditingUserIds.includes(user.id)}
-          onChange={(e) =>
-            handleUserEditChange(user.id, 'name', e.target.value)
-          }
-        />
-      </td>
-      <td className="userTable-rowElement">
-        <input
-          className={`userTable-textInput${inEditingUserIds.includes(user.id) ? ' userTable-activeInput' : ''}`}
-          value={
-            inEditingUsers.find((u) => u.id === user.id)?.email ??
-            user.email
-          }
-          disabled={!inEditingUserIds.includes(user.id)}
-          onChange={(e) =>
-            handleUserEditChange(user.id, 'email', e.target.value)
-          }
-        />
-      </td>
-      <td className="userTable-rowElement">
-        <input
-          className={`userTable-textInput${inEditingUserIds.includes(user.id) ? ' userTable-activeInput' : ''}`}
-          value={
-            inEditingUsers.find((u) => u.id === user.id)?.role ??
-            user.role
-          }
-          disabled={!inEditingUserIds.includes(user.id)}
-          onChange={(e) =>
-            handleUserEditChange(user.id, 'role', e.target.value)
-          }
-        />
-      </td>
-    </>
-    )
-  }
+    return (
+      <>
+        <td className="userTable-rowElement">
+          {renderUserInput(user, 'name', 'name')}
+        </td>
+        <td className="userTable-rowElement">
+          {renderUserInput(user, 'email', 'email')}
+        </td>
+        <td className="userTable-rowElement">
+          {renderUserInput(user, 'role', 'role')}
+        </td>
+      </>
+    );
+  };
+  
 
   return (
     <table className="userTable">
