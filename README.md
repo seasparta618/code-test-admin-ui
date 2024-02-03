@@ -3,7 +3,12 @@
 ## Overview
 This project is a React application created using the create-react-app scaffolding tool. It includes a comprehensive implementation of Storybook, which allows for an interactive exploration and testing of the various React components used throughout the application.
 
-## Special Considerations
+This project is a code challenge from Geektrust, while from the first time I updaload it, it got failed to execute and run with unknow reason: Codu could not verify that the submitted code is related and relevant to the problem. Hence tests were not run and evaluation will not be given. Even a single page with pure typescript and css is failed to run for unknow reason, but I do think I have implemented all the necessary functions and follow the rule for this code test.
+
+## To run the application:
+Please install all the required dependencies using `npm install`, then `npm run start` to start the application.
+
+## Some Special Considerations
 This React project incorporates several design and user experience considerations:
 
 ### Selective Activation of Delete Button: 
