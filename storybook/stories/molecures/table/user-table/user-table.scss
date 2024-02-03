@@ -33,11 +33,10 @@ $row-height: 45px;
     .userTable-rowElement,
     .userTable-headerElement {
       flex: 1;
+      display: flex;
       text-align: start;
       flex-shrink: 0;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
+      align-items: center;
     }
 
     .userTable-rowElement {
@@ -49,14 +48,39 @@ $row-height: 45px;
     }
   }
 
+  .userTable-textInput {
+    flex-grow: 1;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    border: none;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background-color: transparent;
+    color: lib.$color-grey-900;
+    @include lib.typography-text('md', 'regular');
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .userTable-activeInput {
+    border: 1px solid lib.$color-grey-400;
+  }
+
+  .userTable-editableTextInput {
+  }
+
   .userTable-actions {
     display: flex;
     flex-direction: row;
     gap: 8px;
   }
 
-  .userTable-removeIcon,
-  .userTable-editIcon {
+  .userTable-icon {
     height: 28px;
     width: 28px;
     display: flex;
@@ -102,7 +126,7 @@ $row-height: 45px;
     .userTable-actions {
       display: flex;
       flex-direction: row;
-      gap: 8px;
+      gap: 4px;
 
       svg {
         height: 16px;
@@ -110,10 +134,13 @@ $row-height: 45px;
       }
     }
 
-    .userTable-removeIcon,
-    .userTable-editIcon {
-      height: 24px;
-      width: 24px;
+    .userTable-icon {
+      height: 20px;
+      width: 20px;
+    }
+
+    .userTable-textInput {
+      @include lib.typography-text('sm', 'regular');
     }
   }
 }
