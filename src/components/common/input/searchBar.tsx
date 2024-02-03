@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { SearchIcon } from '../../icons/icon';
 
 interface SearchBarProps {
@@ -7,11 +7,11 @@ interface SearchBarProps {
   searchDisabled?: boolean;
 }
 
-export const SearchBar = ({
+export const SearchBar:FC<SearchBarProps> = ({
   currentValue = '',
   onSubmit = () => {},
   searchDisabled = false,
-}: SearchBarProps) => {
+}) => {
   const [value, setValue] = useState<string>(currentValue);
   const [isComposing, setIsComposing] = useState<boolean>(false);
 

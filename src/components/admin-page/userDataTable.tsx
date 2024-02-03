@@ -1,5 +1,5 @@
 // UserDataTable.tsx
-import React from 'react';
+import React, { FC } from 'react';
 import { User } from '../../types/user';
 import { EditIcon, RemoveIcon, RevertIcon, SaveIcon } from '../icons/icon';
 
@@ -22,7 +22,7 @@ interface UserDataTableProps {
   ) => void;
 }
 
-export const UserDataTable: React.FC<UserDataTableProps> = ({
+export const UserDataTable: FC<UserDataTableProps> = ({
   users,
   isBulkSelected,
   selectedUserIds,
