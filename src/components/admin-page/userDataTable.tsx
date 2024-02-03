@@ -36,8 +36,11 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
   handleCancelEditClick,
   handleUserEditChange,
 }) => {
-
-  const renderUserInput = (user: User, field: keyof User, fieldType: keyof User) => {
+  const renderUserInput = (
+    user: User,
+    field: keyof User,
+    fieldType: keyof User
+  ) => {
     const inEditingUser = inEditingUsers.find((u) => u.id === user.id);
     return (
       <input
@@ -50,7 +53,6 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
       />
     );
   };
-  
 
   const renderUserInfo = (user: User) => {
     return (
@@ -67,7 +69,6 @@ export const UserDataTable: React.FC<UserDataTableProps> = ({
       </>
     );
   };
-  
 
   return (
     <table className="userTable">
