@@ -64,7 +64,7 @@ export const AdminCard: FC<AdminCardProps> = ({ users, onUserChange }) => {
 
     // if currently the user is stayed on last page and deleted to no result,
     // if still page existing, need to jump to current page - 1 or 1
-    if (!leftDisplayedUsers) {
+    if (!leftDisplayedUsers.length) {
       setIsBulkSelected(false);
       if (usersAfterDelete.length && activePage > 1) {
         setActivePage((prevActivePage) => prevActivePage - 1);
